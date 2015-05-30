@@ -1,5 +1,10 @@
 # Cinebase
 
+[![](https://img.shields.io/gem/v/cinebase.svg)](http://rubygems.org/gems/cinebase)
+[![](https://img.shields.io/travis/andycroll/cinebase.svg)](https://travis-ci.org/andycroll/cinebase)
+[![](https://img.shields.io/codeclimate/github/andycroll/cinebase.svg)](https://codeclimate.com/github/andycroll/cinebase)
+[![](https://img.shields.io/codeclimate/coverage/github/andycroll/cinebase.svg)](https://codeclimate.com/github/andycroll/cinebase/coverage)
+
 A basic interface for a series of cinema gems.
 
 ## Installation

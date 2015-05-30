@@ -2,7 +2,7 @@ module Cinebase
   # Sabitize titles base class
   class TitleSanitizer < Struct.new(:title)
     def sanitized
-      @sanitzed ||= begin
+      @sanitized ||= begin
         sanitized = title
         remove.each do |pattern|
           sanitized.gsub! pattern, ''

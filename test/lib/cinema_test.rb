@@ -33,8 +33,8 @@ describe Cinebase::Cinema do
         end
       end
 
-      %i(adr address brand country_name extended_address locality name
-         postal_code street_address url).each do |method|
+      %i(adr address brand country_name extended_address full_name locality name
+         postal_code slug street_address url).each do |method|
 
         describe "##{method}" do
           subject { described_class.new(123).send(method) }
@@ -100,6 +100,14 @@ describe Cinebase::Cinema do
       end
     end
 
+    describe '#full_name' do
+      subject { described_class.new(id).full_name }
+
+      it 'returns the subclass name' do
+        subject.must_equal('TestBrand TestName')
+      end
+    end
+
     describe '#locality' do
       subject { described_class.new(id).locality }
 
@@ -121,6 +129,14 @@ describe Cinebase::Cinema do
 
       it 'returns the subclass postal code' do
         subject.must_equal('TestPostalCode')
+      end
+    end
+
+    describe '#slug' do
+      subject { described_class.new(id).slug }
+
+      it 'returns the subclass name' do
+        subject.must_equal('testbrand-testname')
       end
     end
 

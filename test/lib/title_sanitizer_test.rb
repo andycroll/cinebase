@@ -12,8 +12,7 @@ class TestSanitizer < Cinebase::TitleSanitizer
 
   def replace
     {
-      'replace'  => 'with this',
-      /original/ => 'special edition'
+      /Bolshoi - (.*)/ => 'Bolshoi: '
     }
   end
 end
@@ -44,6 +43,14 @@ describe Cinebase::TitleSanitizer do
 
         it 'removes elements from sanitized title' do
           subject.must_equal 'title one'
+        end
+      end
+
+      describe 'replace elements in remove method' do
+        let(:title) { 'Bolshoi - one dance' }
+
+        it 'removes elements from sanitized title' do
+          subject.must_equal 'Bolshoi: one dance'
         end
       end
     end

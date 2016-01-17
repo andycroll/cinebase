@@ -1,6 +1,6 @@
 module Cinebase
   # Sabitize titles base class
-  class TitleSanitizer < Struct.new(:title)
+  TitleSanitizer = Struct.new(:title) do
     def sanitized
       @sanitized ||= begin
         sanitized = title

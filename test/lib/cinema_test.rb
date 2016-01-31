@@ -3,12 +3,17 @@ require_relative '../minitest_helper'
 class TestCinema < Cinebase::Cinema
   def self.all; []; end
   def brand; 'TestBrand'; end
-  def country_name; 'TestCountryName'; end
-  def extended_address; 'TestExtendedAddress'; end
-  def locality; 'TestLocality'; end
+  def adr
+    {
+      street_address: 'TestStreetAddress',
+      extended_address: 'TestExtendedAddress',
+      locality: 'TestLocality',
+      region: 'TestRegion',
+      postal_code: 'TestPostalCode',
+      country_name: 'TestCountryName'
+    }
+  end
   def name; 'TestName'; end
-  def postal_code; 'TestPostalCode'; end
-  def street_address; 'TestStreetAddress'; end
   def url; 'TestUrl'; end
 end
 
@@ -25,6 +30,32 @@ describe Cinebase::Cinema do
         end
       end
 
+      describe '#adr' do
+        subject { described_class.new(123).adr }
+
+        it 'returns the passed id' do
+          subject.must_be_instance_of(Hash)
+        end
+
+        it 'contains all the requisite keys' do
+          subject.keys.must_equal([:street_address, :extended_address,
+                                   :locality, :region, :postal_code,
+                                   :country_name])
+        end
+      end
+
+      %i(street_address extended_address locality region postal_code
+         country_name).each do |method|
+
+        describe "##{method}" do
+          subject { described_class.new(123).send(method) }
+
+          it 'returns the empty string' do
+            subject.must_equal('')
+          end
+        end
+      end
+
       describe '#id' do
         subject { described_class.new(123).id }
 
@@ -33,8 +64,7 @@ describe Cinebase::Cinema do
         end
       end
 
-      %i(adr address brand country_name extended_address full_name locality name
-         postal_code slug street_address url).each do |method|
+      %i(brand full_name name slug url).each do |method|
 
         describe "##{method}" do
           subject { described_class.new(123).send(method) }
@@ -66,6 +96,12 @@ describe Cinebase::Cinema do
       it 'returns a hash' do
         subject.must_be_instance_of(Hash)
       end
+
+      it 'contains all the requisite keys' do
+        subject.keys.must_equal([:street_address, :extended_address,
+                                 :locality, :region, :postal_code,
+                                 :country_name])
+      end
     end
 
     describe '#address' do
@@ -73,6 +109,12 @@ describe Cinebase::Cinema do
 
       it 'returns a hash' do
         subject.must_be_instance_of(Hash)
+      end
+
+      it 'contains all the requisite keys' do
+        subject.keys.must_equal([:street_address, :extended_address,
+                                 :locality, :region, :postal_code,
+                                 :country_name])
       end
     end
 
@@ -129,6 +171,14 @@ describe Cinebase::Cinema do
 
       it 'returns the subclass postal code' do
         subject.must_equal('TestPostalCode')
+      end
+    end
+
+    describe '#region' do
+      subject { described_class.new(id).region }
+
+      it 'returns the subclass region' do
+        subject.must_equal('TestRegion')
       end
     end
 

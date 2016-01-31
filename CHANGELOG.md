@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Upcoming]
+## [1.1.0]
 ### Changed
 - It is expected that the `Cinema#adr` method is redefined on the subclass and
   thus auto-populates the following added methods...

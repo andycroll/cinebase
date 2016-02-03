@@ -42,7 +42,7 @@ describe Cinebase::Performance do
           cinema_id:   123,
           cinema_name: 'Cinema',
           film_name:   'Film Name',
-          starting_at: DateTime.now
+          starting_at: Time.now
         }
       end
 
@@ -82,7 +82,7 @@ describe Cinebase::Performance do
               dimension:   '3d',
               cinema_name: 'Cinema',
               film_name:   'Film Name',
-              starting_at: DateTime.now
+              starting_at: Time.now
             }
           end
 
@@ -108,8 +108,43 @@ describe Cinebase::Performance do
 
       describe '#starting_at' do
         subject { described_class.new(options).starting_at }
-        it 'returns the value' do
-          subject.must_equal(options[:starting_at])
+
+        describe 'with UTC time' do
+          let(:options) do
+            {
+              cinema_id:   123,
+              cinema_name: 'Cinema',
+              film_name:   'Film Name',
+              starting_at: Time.utc(1979, 9, 12, 7, 0, 0)
+            }
+          end
+
+          it 'returns utc' do
+            subject.utc?.must_equal(true)
+          end
+
+          it 'returns the value' do
+            subject.must_equal(options[:starting_at])
+          end
+        end
+
+        describe 'non UTC time' do
+          let(:options) do
+            {
+              cinema_id:   123,
+              cinema_name: 'Cinema',
+              film_name:   'Film Name',
+              starting_at: Time.new(1979, 9, 12, 8, 0, 0)
+            }
+          end
+
+          it 'returns utc' do
+            subject.utc?.must_equal(true)
+          end
+
+          it 'returns the value' do
+            subject.must_equal(Time.utc(1979, 9, 12, 7, 0, 0))
+          end
         end
       end
 
@@ -126,7 +161,7 @@ describe Cinebase::Performance do
               cinema_id:   123,
               cinema_name: 'Cinema',
               film_name:   'Film Name',
-              starting_at: DateTime.now,
+              starting_at: Time.now,
               variant:     %w(so here we are)
             }
           end
@@ -142,7 +177,7 @@ describe Cinebase::Performance do
               cinema_id:   123,
               cinema_name: 'Cinema',
               film_name:   'Film Name',
-              starting_at: DateTime.now,
+              starting_at: Time.now,
               variant:     'so here we are'
             }
           end

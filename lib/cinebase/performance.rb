@@ -6,7 +6,6 @@ module Cinebase
     attr_reader :cinema_id
     attr_reader :cinema_name
     attr_reader :film_name
-    attr_reader :starting_at
 
     def initialize(options)
       @booking_url = options.fetch(:booking_url, nil)
@@ -14,13 +13,22 @@ module Cinebase
       @cinema_id   = options.fetch(:cinema_id)
       @dimension   = options.fetch(:dimension, '2d')
       @film_name   = options.fetch(:film_name)
-      @starting_at = options.fetch(:starting_at)
+      @time        = options.fetch(:starting_at)
       @variant     = options.fetch(:variant, [])
     end
 
     # Implement to deliver an Array of Screening objects
     def self.at(cinema_id)
       fail NotImplementedError, "This #{self.class} cannot respond to: "
+    end
+
+    def starting_at
+      @starting_at ||=
+        if @time.utc?
+          @time
+        else
+          TZInfo::Timezone.get('Europe/London').local_to_utc(@time)
+        end
     end
 
     def showing_on

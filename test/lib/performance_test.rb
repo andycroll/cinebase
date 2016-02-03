@@ -101,8 +101,35 @@ describe Cinebase::Performance do
 
       describe '#showing_on' do
         subject { described_class.new(options).showing_on }
-        it 'returns the value' do
-          subject.must_equal(options[:starting_at].to_date)
+
+        describe 'with UTC time' do
+          let(:options) do
+            {
+              cinema_id:   123,
+              cinema_name: 'Cinema',
+              film_name:   'Film Name',
+              starting_at: Time.utc(1979, 9, 12, 0, 15, 0)
+            }
+          end
+
+          it 'returns the UTC date' do
+            subject.must_equal(Date.new(1979, 9, 12))
+          end
+        end
+
+        describe 'non UTC time' do
+          let(:options) do
+            {
+              cinema_id:   123,
+              cinema_name: 'Cinema',
+              film_name:   'Film Name',
+              starting_at: Time.new(1979, 9, 12, 0, 30, 0, '+01:00')
+            }
+          end
+
+          it 'returns the UTC date' do
+            subject.must_equal(Date.new(1979, 9, 11))
+          end
         end
       end
 
@@ -134,7 +161,7 @@ describe Cinebase::Performance do
               cinema_id:   123,
               cinema_name: 'Cinema',
               film_name:   'Film Name',
-              starting_at: Time.new(1979, 9, 12, 8, 0, 0)
+              starting_at: Time.new(1979, 9, 12, 8, 0, 0, '+01:00')
             }
           end
 

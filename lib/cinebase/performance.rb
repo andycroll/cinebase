@@ -1,12 +1,12 @@
 module Cinebase
-  # Screening base class
-  class Screening
+  # Performance base class
+  class Performance
     attr_reader :booking_url
     attr_reader :dimension
     attr_reader :cinema_id
     attr_reader :cinema_name
     attr_reader :film_name
-    attr_reader :showing_at
+    attr_reader :starting_at
 
     def initialize(options)
       @booking_url = options.fetch(:booking_url, nil)
@@ -14,7 +14,7 @@ module Cinebase
       @cinema_id   = options.fetch(:cinema_id)
       @dimension   = options.fetch(:dimension, '2d')
       @film_name   = options.fetch(:film_name)
-      @showing_at  = options.fetch(:time)
+      @starting_at = options.fetch(:starting_at)
       @variant     = options.fetch(:variant, [])
     end
 
@@ -24,7 +24,7 @@ module Cinebase
     end
 
     def showing_on
-      @showing_at.to_date
+      starting_at.to_date
     end
 
     def variant

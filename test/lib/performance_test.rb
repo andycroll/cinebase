@@ -1,13 +1,15 @@
 require_relative '../minitest_helper'
 require 'date'
 
-class TestScreening < Cinebase::Screening
-  def self.at(cinema_id); cinema_id; end
+class TestPerformance < Cinebase::Performance
+  def self.at(cinema_id)
+    cinema_id
+  end
 end
 
-describe Cinebase::Screening do
+describe Cinebase::Performance do
   describe 'as an abstract template class' do
-    let(:described_class) { Cinebase::Screening }
+    let(:described_class) { Cinebase::Performance }
 
     describe 'required methods' do
       describe '.at(id)' do
@@ -23,7 +25,7 @@ describe Cinebase::Screening do
       subject { {} }
 
       %i(booking_url cinema_id cinema_name dimension film_name showing_on
-         showing_at).each do |method|
+         starting_at).each do |method|
         describe "##{method}" do
           subject { described_class.new(options).send(method) }
 
@@ -40,7 +42,7 @@ describe Cinebase::Screening do
           cinema_id:   123,
           cinema_name: 'Cinema',
           film_name:   'Film Name',
-          time:        DateTime.now
+          starting_at: DateTime.now
         }
       end
 
@@ -80,7 +82,7 @@ describe Cinebase::Screening do
               dimension:   '3d',
               cinema_name: 'Cinema',
               film_name:   'Film Name',
-              time:        DateTime.now
+              starting_at: DateTime.now
             }
           end
 
@@ -100,14 +102,14 @@ describe Cinebase::Screening do
       describe '#showing_on' do
         subject { described_class.new(options).showing_on }
         it 'returns the value' do
-          subject.must_equal(options[:time].to_date)
+          subject.must_equal(options[:starting_at].to_date)
         end
       end
 
-      describe '#showing_at' do
-        subject { described_class.new(options).showing_at }
+      describe '#starting_at' do
+        subject { described_class.new(options).starting_at }
         it 'returns the value' do
-          subject.must_equal(options[:time])
+          subject.must_equal(options[:starting_at])
         end
       end
 
@@ -124,7 +126,7 @@ describe Cinebase::Screening do
               cinema_id:   123,
               cinema_name: 'Cinema',
               film_name:   'Film Name',
-              time:        DateTime.now,
+              starting_at: DateTime.now,
               variant:     %w(so here we are)
             }
           end
@@ -140,7 +142,7 @@ describe Cinebase::Screening do
               cinema_id:   123,
               cinema_name: 'Cinema',
               film_name:   'Film Name',
-              time:        DateTime.now,
+              starting_at: DateTime.now,
               variant:     'so here we are'
             }
           end
@@ -154,7 +156,7 @@ describe Cinebase::Screening do
   end
 
   describe 'with implemented subclass' do
-    let(:described_class) { TestScreening }
+    let(:described_class) { TestPerformance }
 
     describe '.at(cinema_id)' do
       subject { described_class.at(123) }

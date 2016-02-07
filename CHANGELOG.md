@@ -2,6 +2,19 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.1]
+### Fixed
+- `Cinema#address` is now a method call, alias_method was always pointing at the
+  superclass
+
+## [3.0.0]
+### Changed
+- screening_at for a Performance is always in UTC
+
+## [2.0.0]
+### Changed
+- Screenings are now Performances
+
 ## [1.1.0]
 ### Changed
 - It is expected that the `Cinema#adr` method is redefined on the subclass and

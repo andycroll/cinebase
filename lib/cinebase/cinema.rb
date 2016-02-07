@@ -21,7 +21,10 @@ module Cinebase
         country_name:     nil
       }
     end
-    alias_method :address, :adr
+
+    def address
+      adr
+    end
 
     def country_name
       adr[:country_name].to_s

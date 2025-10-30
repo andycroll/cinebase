@@ -27,7 +27,7 @@ describe Cinebase::TitleSanitizer do
       let(:title) { 'anything' }
 
       it 'raises NotImplementedError' do
-        -> { subject }.must_raise NotImplementedError
+        _ { subject }.must_raise NotImplementedError
       end
     end
   end
@@ -42,7 +42,7 @@ describe Cinebase::TitleSanitizer do
         let(:title) { 'title remove one' }
 
         it 'removes elements from sanitized title' do
-          subject.must_equal 'title one'
+          _(subject).must_equal 'title one'
         end
       end
 
@@ -50,7 +50,7 @@ describe Cinebase::TitleSanitizer do
         let(:title) { 'Bolshoi - one dance' }
 
         it 'removes elements from sanitized title' do
-          subject.must_equal 'Bolshoi: one dance'
+          _(subject).must_equal 'Bolshoi: one dance'
         end
       end
     end

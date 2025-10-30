@@ -16,7 +16,7 @@ describe Cinebase::Performance do
         subject { described_class.at(123) }
 
         it 'raises an error' do
-          -> { subject }.must_raise NotImplementedError
+          _ { subject }.must_raise NotImplementedError
         end
       end
     end
@@ -30,7 +30,7 @@ describe Cinebase::Performance do
           subject { described_class.new(options).send(method) }
 
           it 'raises an error' do
-            -> { subject }.must_raise NameError
+            _ { subject }.must_raise NameError
           end
         end
       end
@@ -50,21 +50,21 @@ describe Cinebase::Performance do
         subject { described_class.new(options).booking_url }
 
         it 'returns nil' do
-          subject.must_equal(nil)
+          _(subject).must_be_nil
         end
       end
 
       describe '#cinema_id' do
         subject { described_class.new(options).cinema_id }
         it 'returns the value' do
-          subject.must_equal(123)
+          _(subject).must_equal(123)
         end
       end
 
       describe '#cinema_name' do
         subject { described_class.new(options).cinema_name }
         it 'returns the value' do
-          subject.must_equal('Cinema')
+          _(subject).must_equal('Cinema')
         end
       end
 
@@ -72,7 +72,7 @@ describe Cinebase::Performance do
         subject { described_class.new(options).dimension }
 
         it 'returns 2d default' do
-          subject.must_equal('2d')
+          _(subject).must_equal('2d')
         end
 
         describe 'with array passed in' do
@@ -87,7 +87,7 @@ describe Cinebase::Performance do
           end
 
           it 'returns a sorted array' do
-            subject.must_equal('3d')
+            _(subject).must_equal('3d')
           end
         end
       end
@@ -95,7 +95,7 @@ describe Cinebase::Performance do
       describe '#film_name' do
         subject { described_class.new(options).film_name }
         it 'returns the value' do
-          subject.must_equal('Film Name')
+          _(subject).must_equal('Film Name')
         end
       end
 
@@ -113,7 +113,7 @@ describe Cinebase::Performance do
           end
 
           it 'returns the UTC date' do
-            subject.must_equal(Date.new(1979, 9, 12))
+            _(subject).must_equal(Date.new(1979, 9, 12))
           end
         end
 
@@ -128,7 +128,7 @@ describe Cinebase::Performance do
           end
 
           it 'returns the UTC date' do
-            subject.must_equal(Date.new(1979, 9, 11))
+            _(subject).must_equal(Date.new(1979, 9, 11))
           end
         end
       end
@@ -147,11 +147,11 @@ describe Cinebase::Performance do
           end
 
           it 'returns utc' do
-            subject.utc?.must_equal(true)
+            _(subject.utc?).must_equal(true)
           end
 
           it 'returns the value' do
-            subject.must_equal(options[:starting_at])
+            _(subject).must_equal(options[:starting_at])
           end
         end
 
@@ -166,11 +166,11 @@ describe Cinebase::Performance do
           end
 
           it 'returns utc' do
-            subject.utc?.must_equal(true)
+            _(subject.utc?).must_equal(true)
           end
 
           it 'returns the value' do
-            subject.must_equal(Time.utc(1979, 9, 12, 7, 0, 0))
+            _(subject).must_equal(Time.utc(1979, 9, 12, 7, 0, 0))
           end
         end
       end
@@ -179,7 +179,7 @@ describe Cinebase::Performance do
         subject { described_class.new(options).variant }
 
         it 'returns an array' do
-          subject.must_equal([])
+          _(subject).must_equal([])
         end
 
         describe 'with array passed in' do
@@ -194,7 +194,7 @@ describe Cinebase::Performance do
           end
 
           it 'returns a sorted array' do
-            subject.must_equal(%w(are here so we))
+            _(subject).must_equal(%w(are here so we))
           end
         end
 
@@ -210,7 +210,7 @@ describe Cinebase::Performance do
           end
 
           it 'returns a sorted array' do
-            subject.must_equal(%w(are here so we))
+            _(subject).must_equal(%w(are here so we))
           end
         end
       end
@@ -223,7 +223,7 @@ describe Cinebase::Performance do
     describe '.at(cinema_id)' do
       subject { described_class.at(123) }
       it 'returns' do
-        subject.must_equal(123)
+        _(subject).must_equal(123)
       end
     end
   end

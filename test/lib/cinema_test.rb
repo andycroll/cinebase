@@ -26,7 +26,7 @@ describe Cinebase::Cinema do
         subject { described_class.all }
 
         it 'raises an error' do
-          -> { subject }.must_raise NotImplementedError
+          _ { subject }.must_raise NotImplementedError
         end
       end
 
@@ -34,13 +34,13 @@ describe Cinebase::Cinema do
         subject { described_class.new(123).adr }
 
         it 'returns the passed id' do
-          subject.must_be_instance_of(Hash)
+          _(subject).must_be_instance_of(Hash)
         end
 
         it 'contains all the requisite keys' do
-          subject.keys.must_equal([:street_address, :extended_address,
-                                   :locality, :region, :postal_code,
-                                   :country_name])
+          _(subject.keys).must_equal([:street_address, :extended_address,
+                                      :locality, :region, :postal_code,
+                                      :country_name])
         end
       end
 
@@ -51,7 +51,7 @@ describe Cinebase::Cinema do
           subject { described_class.new(123).send(method) }
 
           it 'returns the empty string' do
-            subject.must_equal('')
+            _(subject).must_equal('')
           end
         end
       end
@@ -60,7 +60,7 @@ describe Cinebase::Cinema do
         subject { described_class.new(123).id }
 
         it 'returns the passed id' do
-          subject.must_equal(123)
+          _(subject).must_equal(123)
         end
       end
 
@@ -70,7 +70,7 @@ describe Cinebase::Cinema do
           subject { described_class.new(123).send(method) }
 
           it 'raises an error' do
-            -> { subject }.must_raise NotImplementedError
+            _ { subject }.must_raise NotImplementedError
           end
         end
 
@@ -86,7 +86,7 @@ describe Cinebase::Cinema do
       subject { described_class.all }
 
       it 'returns a hash' do
-        subject.must_be_instance_of(Array)
+        _(subject).must_be_instance_of(Array)
       end
     end
 
@@ -94,13 +94,13 @@ describe Cinebase::Cinema do
       subject { described_class.new(id).adr }
 
       it 'returns a hash' do
-        subject.must_be_instance_of(Hash)
+        _(subject).must_be_instance_of(Hash)
       end
 
       it 'contains all the requisite keys' do
-        subject.keys.must_equal([:street_address, :extended_address,
-                                 :locality, :region, :postal_code,
-                                 :country_name])
+        _(subject.keys).must_equal([:street_address, :extended_address,
+                                    :locality, :region, :postal_code,
+                                    :country_name])
       end
     end
 
@@ -108,13 +108,13 @@ describe Cinebase::Cinema do
       subject { described_class.new(id).address }
 
       it 'returns a hash' do
-        subject.must_be_instance_of(Hash)
+        _(subject).must_be_instance_of(Hash)
       end
 
       it 'contains all the requisite keys' do
-        subject.keys.must_equal([:street_address, :extended_address,
-                                 :locality, :region, :postal_code,
-                                 :country_name])
+        _(subject.keys).must_equal([:street_address, :extended_address,
+                                    :locality, :region, :postal_code,
+                                    :country_name])
       end
     end
 
@@ -122,7 +122,7 @@ describe Cinebase::Cinema do
       subject { described_class.new(id).brand }
 
       it 'returns the subclass brand' do
-        subject.must_equal('TestBrand')
+        _(subject).must_equal('TestBrand')
       end
     end
 
@@ -130,7 +130,7 @@ describe Cinebase::Cinema do
       subject { described_class.new(id).country_name }
 
       it 'returns the subclass country' do
-        subject.must_equal('TestCountryName')
+        _(subject).must_equal('TestCountryName')
       end
     end
 
@@ -138,7 +138,7 @@ describe Cinebase::Cinema do
       subject { described_class.new(id).extended_address }
 
       it 'returns the subclass extended address' do
-        subject.must_equal('TestExtendedAddress')
+        _(subject).must_equal('TestExtendedAddress')
       end
     end
 
@@ -146,7 +146,7 @@ describe Cinebase::Cinema do
       subject { described_class.new(id).full_name }
 
       it 'returns the subclass name' do
-        subject.must_equal('TestBrand TestName')
+        _(subject).must_equal('TestBrand TestName')
       end
     end
 
@@ -154,7 +154,7 @@ describe Cinebase::Cinema do
       subject { described_class.new(id).locality }
 
       it 'returns the subclass locality' do
-        subject.must_equal('TestLocality')
+        _(subject).must_equal('TestLocality')
       end
     end
 
@@ -162,7 +162,7 @@ describe Cinebase::Cinema do
       subject { described_class.new(id).name }
 
       it 'returns the subclass name' do
-        subject.must_equal('TestName')
+        _(subject).must_equal('TestName')
       end
     end
 
@@ -170,7 +170,7 @@ describe Cinebase::Cinema do
       subject { described_class.new(id).postal_code }
 
       it 'returns the subclass postal code' do
-        subject.must_equal('TestPostalCode')
+        _(subject).must_equal('TestPostalCode')
       end
     end
 
@@ -178,7 +178,7 @@ describe Cinebase::Cinema do
       subject { described_class.new(id).region }
 
       it 'returns the subclass region' do
-        subject.must_equal('TestRegion')
+        _(subject).must_equal('TestRegion')
       end
     end
 
@@ -186,7 +186,7 @@ describe Cinebase::Cinema do
       subject { described_class.new(id).slug }
 
       it 'returns the subclass name' do
-        subject.must_equal('testbrand-testname')
+        _(subject).must_equal('testbrand-testname')
       end
     end
 
@@ -194,7 +194,7 @@ describe Cinebase::Cinema do
       subject { described_class.new(id).street_address }
 
       it 'returns the subclass address' do
-        subject.must_equal('TestStreetAddress')
+        _(subject).must_equal('TestStreetAddress')
       end
     end
 
@@ -202,7 +202,7 @@ describe Cinebase::Cinema do
       subject { described_class.new(id).url }
 
       it 'returns the subclass address' do
-        subject.must_equal('TestUrl')
+        _(subject).must_equal('TestUrl')
       end
     end
   end

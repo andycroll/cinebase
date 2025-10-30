@@ -2,6 +2,24 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.0.0] - 2025-10-30
+### Changed
+- **BREAKING**: Updated minimum Ruby version to 3.3+
+- Migrated CI from Travis CI to GitHub Actions
+- Updated bundler requirement to >= 2.0 (from ~> 1.9)
+- Updated rake requirement to >= 13.0 (from ~> 10.0)
+- Updated SimpleCov from 0.13.0 to 0.22.0
+- Replaced deprecated CodeClimate test reporter with SimpleCov directly
+- Changed default branch from `master` to `main`
+
+### Added
+- Frozen string literal pragma to all library files for Ruby 3+ compatibility
+- `.ruby-version` file specifying Ruby 3.4.7
+
+### Fixed
+- Fixed Minitest deprecation warnings by updating to modern expectation syntax
+- Fixed frozen string literal warnings in TitleSanitizer by using `.dup` for mutable string copy
+
 ## [3.0.1]
 ### Fixed
 - `Cinema#address` is now a method call, alias_method was always pointing at the

@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Cinebase
   # Sabitize titles base class
   TitleSanitizer = Struct.new(:title) do
     def sanitized
       @sanitized ||= begin
-        sanitized = title
+        sanitized = title.dup
         remove.each do |pattern|
           sanitized.gsub! pattern, ''
         end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Cinebase
   # Cinema base class
   class Cinema

@@ -1,0 +1,56 @@
+name: Release Gem
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (leave empty to use version from version.rb)'
+        required: false
+        type: string
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.4'
+        bundler-cache: true
+
+    - name: Run tests
+      run: bundle exec rake test
+
+    - name: Build gem
+      run: gem build cinebase.gemspec
+
+    - name: Get gem version
+      id: gem_version
+      run: |
+        VERSION=$(ruby -r ./lib/cinebase/version.rb -e "puts Cinebase::VERSION")
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "Building version $VERSION"
+
+    - name: Push to RubyGems
+      run: |
+        mkdir -p ~/.gem
+        cat << EOF > ~/.gem/credentials
+        ---
+        :rubygems_api_key: ${RUBYGEMS_API_KEY}
+        EOF
+        chmod 0600 ~/.gem/credentials
+        gem push cinebase-${{ steps.gem_version.outputs.version }}.gem
+      env:
+        RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+
+    - name: Create Git tag
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git tag -a v${{ steps.gem_version.outputs.version }} -m "Release v${{ steps.gem_version.outputs.version }}"
+        git push origin v${{ steps.gem_version.outputs.version }}

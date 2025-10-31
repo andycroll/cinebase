@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.1.0] - 2025-10-31
+### Changed
+- Converted all test files from minitest spec syntax to vanilla minitest syntax
+
 ## [5.0.0] - 2025-10-30
 ### Changed
 - **BREAKING**: Updated minimum Ruby version to 3.3+

@@ -17,193 +17,139 @@ class TestCinema < Cinebase::Cinema
   def url; 'TestUrl'; end
 end
 
-describe Cinebase::Cinema do
-  describe 'as an abstract template class' do
-    let(:described_class) { Cinebase::Cinema }
+class CinemaTest < Minitest::Test
+  # Tests for abstract template class
 
-    describe 'required methods' do
-      describe '.all' do
-        subject { described_class.all }
-
-        it 'raises an error' do
-          _ { subject }.must_raise NotImplementedError
-        end
-      end
-
-      describe '#adr' do
-        subject { described_class.new(123).adr }
-
-        it 'returns the passed id' do
-          _(subject).must_be_instance_of(Hash)
-        end
-
-        it 'contains all the requisite keys' do
-          _(subject.keys).must_equal([:street_address, :extended_address,
-                                      :locality, :region, :postal_code,
-                                      :country_name])
-        end
-      end
-
-      %i(street_address extended_address locality region postal_code
-         country_name).each do |method|
-
-        describe "##{method}" do
-          subject { described_class.new(123).send(method) }
-
-          it 'returns the empty string' do
-            _(subject).must_equal('')
-          end
-        end
-      end
-
-      describe '#id' do
-        subject { described_class.new(123).id }
-
-        it 'returns the passed id' do
-          _(subject).must_equal(123)
-        end
-      end
-
-      %i(brand full_name name slug url).each do |method|
-
-        describe "##{method}" do
-          subject { described_class.new(123).send(method) }
-
-          it 'raises an error' do
-            _ { subject }.must_raise NotImplementedError
-          end
-        end
-
-      end
-    end
+  def test_abstract_class_all_raises_error
+    assert_raises(NotImplementedError) { Cinebase::Cinema.all }
   end
 
-  describe 'with implemented subclass' do
-    let(:described_class) { TestCinema }
-    let(:id) { 123 }
+  def test_abstract_class_adr_returns_hash
+    result = Cinebase::Cinema.new(123).adr
+    assert_instance_of(Hash, result)
+  end
 
-    describe '.all' do
-      subject { described_class.all }
+  def test_abstract_class_adr_contains_all_requisite_keys
+    result = Cinebase::Cinema.new(123).adr
+    assert_equal([:street_address, :extended_address, :locality, :region, :postal_code, :country_name], result.keys)
+  end
 
-      it 'returns a hash' do
-        _(subject).must_be_instance_of(Array)
-      end
-    end
+  def test_abstract_class_street_address_returns_empty_string
+    assert_equal('', Cinebase::Cinema.new(123).street_address)
+  end
 
-    describe '#adr' do
-      subject { described_class.new(id).adr }
+  def test_abstract_class_extended_address_returns_empty_string
+    assert_equal('', Cinebase::Cinema.new(123).extended_address)
+  end
 
-      it 'returns a hash' do
-        _(subject).must_be_instance_of(Hash)
-      end
+  def test_abstract_class_locality_returns_empty_string
+    assert_equal('', Cinebase::Cinema.new(123).locality)
+  end
 
-      it 'contains all the requisite keys' do
-        _(subject.keys).must_equal([:street_address, :extended_address,
-                                    :locality, :region, :postal_code,
-                                    :country_name])
-      end
-    end
+  def test_abstract_class_region_returns_empty_string
+    assert_equal('', Cinebase::Cinema.new(123).region)
+  end
 
-    describe '#address' do
-      subject { described_class.new(id).address }
+  def test_abstract_class_postal_code_returns_empty_string
+    assert_equal('', Cinebase::Cinema.new(123).postal_code)
+  end
 
-      it 'returns a hash' do
-        _(subject).must_be_instance_of(Hash)
-      end
+  def test_abstract_class_country_name_returns_empty_string
+    assert_equal('', Cinebase::Cinema.new(123).country_name)
+  end
 
-      it 'contains all the requisite keys' do
-        _(subject.keys).must_equal([:street_address, :extended_address,
-                                    :locality, :region, :postal_code,
-                                    :country_name])
-      end
-    end
+  def test_abstract_class_id_returns_passed_id
+    assert_equal(123, Cinebase::Cinema.new(123).id)
+  end
 
-    describe '#brand' do
-      subject { described_class.new(id).brand }
+  def test_abstract_class_brand_raises_error
+    assert_raises(NotImplementedError) { Cinebase::Cinema.new(123).brand }
+  end
 
-      it 'returns the subclass brand' do
-        _(subject).must_equal('TestBrand')
-      end
-    end
+  def test_abstract_class_full_name_raises_error
+    assert_raises(NotImplementedError) { Cinebase::Cinema.new(123).full_name }
+  end
 
-    describe '#country_name' do
-      subject { described_class.new(id).country_name }
+  def test_abstract_class_name_raises_error
+    assert_raises(NotImplementedError) { Cinebase::Cinema.new(123).name }
+  end
 
-      it 'returns the subclass country' do
-        _(subject).must_equal('TestCountryName')
-      end
-    end
+  def test_abstract_class_slug_raises_error
+    assert_raises(NotImplementedError) { Cinebase::Cinema.new(123).slug }
+  end
 
-    describe '#extended_address' do
-      subject { described_class.new(id).extended_address }
+  def test_abstract_class_url_raises_error
+    assert_raises(NotImplementedError) { Cinebase::Cinema.new(123).url }
+  end
 
-      it 'returns the subclass extended address' do
-        _(subject).must_equal('TestExtendedAddress')
-      end
-    end
+  # Tests for implemented subclass
 
-    describe '#full_name' do
-      subject { described_class.new(id).full_name }
+  def test_subclass_all_returns_array
+    result = TestCinema.all
+    assert_instance_of(Array, result)
+  end
 
-      it 'returns the subclass name' do
-        _(subject).must_equal('TestBrand TestName')
-      end
-    end
+  def test_subclass_adr_returns_hash
+    result = TestCinema.new(123).adr
+    assert_instance_of(Hash, result)
+  end
 
-    describe '#locality' do
-      subject { described_class.new(id).locality }
+  def test_subclass_adr_contains_all_requisite_keys
+    result = TestCinema.new(123).adr
+    assert_equal([:street_address, :extended_address, :locality, :region, :postal_code, :country_name], result.keys)
+  end
 
-      it 'returns the subclass locality' do
-        _(subject).must_equal('TestLocality')
-      end
-    end
+  def test_subclass_address_returns_hash
+    result = TestCinema.new(123).address
+    assert_instance_of(Hash, result)
+  end
 
-    describe '#name' do
-      subject { described_class.new(id).name }
+  def test_subclass_address_contains_all_requisite_keys
+    result = TestCinema.new(123).address
+    assert_equal([:street_address, :extended_address, :locality, :region, :postal_code, :country_name], result.keys)
+  end
 
-      it 'returns the subclass name' do
-        _(subject).must_equal('TestName')
-      end
-    end
+  def test_subclass_brand_returns_test_brand
+    assert_equal('TestBrand', TestCinema.new(123).brand)
+  end
 
-    describe '#postal_code' do
-      subject { described_class.new(id).postal_code }
+  def test_subclass_country_name_returns_test_country_name
+    assert_equal('TestCountryName', TestCinema.new(123).country_name)
+  end
 
-      it 'returns the subclass postal code' do
-        _(subject).must_equal('TestPostalCode')
-      end
-    end
+  def test_subclass_extended_address_returns_test_extended_address
+    assert_equal('TestExtendedAddress', TestCinema.new(123).extended_address)
+  end
 
-    describe '#region' do
-      subject { described_class.new(id).region }
+  def test_subclass_full_name_returns_brand_and_name
+    assert_equal('TestBrand TestName', TestCinema.new(123).full_name)
+  end
 
-      it 'returns the subclass region' do
-        _(subject).must_equal('TestRegion')
-      end
-    end
+  def test_subclass_locality_returns_test_locality
+    assert_equal('TestLocality', TestCinema.new(123).locality)
+  end
 
-    describe '#slug' do
-      subject { described_class.new(id).slug }
+  def test_subclass_name_returns_test_name
+    assert_equal('TestName', TestCinema.new(123).name)
+  end
 
-      it 'returns the subclass name' do
-        _(subject).must_equal('testbrand-testname')
-      end
-    end
+  def test_subclass_postal_code_returns_test_postal_code
+    assert_equal('TestPostalCode', TestCinema.new(123).postal_code)
+  end
 
-    describe '#street_address' do
-      subject { described_class.new(id).street_address }
+  def test_subclass_region_returns_test_region
+    assert_equal('TestRegion', TestCinema.new(123).region)
+  end
 
-      it 'returns the subclass address' do
-        _(subject).must_equal('TestStreetAddress')
-      end
-    end
+  def test_subclass_slug_returns_slugified_name
+    assert_equal('testbrand-testname', TestCinema.new(123).slug)
+  end
 
-    describe '#url' do
-      subject { described_class.new(id).url }
+  def test_subclass_street_address_returns_test_street_address
+    assert_equal('TestStreetAddress', TestCinema.new(123).street_address)
+  end
 
-      it 'returns the subclass address' do
-        _(subject).must_equal('TestUrl')
-      end
-    end
+  def test_subclass_url_returns_test_url
+    assert_equal('TestUrl', TestCinema.new(123).url)
   end
 end

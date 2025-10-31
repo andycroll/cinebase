@@ -17,42 +17,22 @@ class TestSanitizer < Cinebase::TitleSanitizer
   end
 end
 
-describe Cinebase::TitleSanitizer do
-  describe 'as an abstract template class' do
-    let(:described_class) { Cinebase::TitleSanitizer }
+class TitleSanitizerTest < Minitest::Test
+  # Tests for abstract template class
 
-    describe '#sanitized' do
-      subject { described_class.new(title).sanitized }
-
-      let(:title) { 'anything' }
-
-      it 'raises NotImplementedError' do
-        _ { subject }.must_raise NotImplementedError
-      end
-    end
+  def test_abstract_class_sanitized_raises_not_implemented_error
+    assert_raises(NotImplementedError) { Cinebase::TitleSanitizer.new('anything').sanitized }
   end
 
-  describe 'with implemented subclass' do
-    let(:described_class) { TestSanitizer }
+  # Tests for implemented subclass
 
-    describe '#sanitized' do
-      subject { described_class.new(title).sanitized }
+  def test_subclass_sanitized_removes_elements_from_title
+    result = TestSanitizer.new('title remove one').sanitized
+    assert_equal('title one', result)
+  end
 
-      describe 'remove elements in remove method' do
-        let(:title) { 'title remove one' }
-
-        it 'removes elements from sanitized title' do
-          _(subject).must_equal 'title one'
-        end
-      end
-
-      describe 'replace elements in remove method' do
-        let(:title) { 'Bolshoi - one dance' }
-
-        it 'removes elements from sanitized title' do
-          _(subject).must_equal 'Bolshoi: one dance'
-        end
-      end
-    end
+  def test_subclass_sanitized_replaces_elements_in_title
+    result = TestSanitizer.new('Bolshoi - one dance').sanitized
+    assert_equal('Bolshoi: one dance', result)
   end
 end

@@ -32,8 +32,12 @@ module Cinebase
   # Rules every chain can share; subclasses opt in after their own patterns,
   # e.g. `[...] + COMMON_REMOVE` in #remove
   class TitleSanitizer
-    LANGUAGES = %w(Arabic Cantonese French Hindi Kannada Korean Malayalam
-                   Mandarin Marathi Polish Punjabi Tamil Telugu Turkish).freeze
+    LANGUAGES = %w(Arabic Cantonese French Hindi Kannada Korean Lithuanian
+                   Malayalam Mandarin Marathi Polish Punjabi Tamil Telugu
+                   Turkish).freeze
+
+    # A trailing "(1996)", allowing other bracketed markers after it
+    FILM_YEAR = /\s*\((1[89]\d{2}|20\d{2})\)(?=(?:\s*\([^)]*\))*\s*\z)/
 
     COMMON_REMOVE = [
       *Festival::PREFIXES,                              # festival prefix
@@ -41,11 +45,19 @@ module Cinebase
       /\((#{LANGUAGES.join('|')})\)/i,                  # language version
       /\((Dubbed|Subbed|English Dub|[^)]*subtitles)\)/i, # dub or subtitle version
       /\(\d+(st|nd|rd|th) Anniversary\)/i,              # anniversary re-release
+      /\(Re-release\)/i,                                # re-release
+      FILM_YEAR,                                        # film year, see .film_year
       /\s*\+\s*(In-Person )?Q&A\z/i,                    # Q&A add-on
       /:\s*Encore\z/i,                                  # encore
       /\bsing-?a-?long\z/i,                             # singalong
       'amp;'                                            # html ampersands
     ].freeze
+
+    # @param [String] title raw film title
+    # @return [Integer, nil] the film's year from a trailing "(1996)"
+    def self.film_year(title)
+      title[FILM_YEAR, 1]&.to_i
+    end
 
     COMMON_REPLACE = {
       /Met Opera 20\d{2}-\d{2}: (.*)/              => 'Met Opera: ',

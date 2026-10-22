@@ -45,7 +45,7 @@ module CinemaChainName
     def self.at(cinema_id)
       # parse webpages or apis to get performances for a cinema, built with
       # booking_url:, cinema_id:, cinema_name:, dimension:, festival:,
-      # film_name:, language:, starting_at: and variant:
+      # film_name:, film_year:, language:, starting_at: and variant:
     end
   end
 end
@@ -84,6 +84,19 @@ Cinebase::Festival.from_title('UKJFF - From Cable Street To Brick Lane', year: 2
 ```
 
 `COMMON_REMOVE` strips the same prefixes from titles.
+
+### Film years
+
+Titles often end with the film's year. `COMMON_REMOVE` strips it, and
+`TitleSanitizer.film_year` reads it so it can be passed as `film_year:`:
+
+```ruby
+Cinebase::TitleSanitizer.film_year('Street Fighter (2026)')               #=> 2026
+Cinebase::TitleSanitizer.film_year('Kung Fu Soccer (2026) (Dubbed)')     #=> 2026
+Cinebase::TitleSanitizer.film_year('Blade Runner 2049')                  #=> nil
+```
+
+For a re-release this is the original year, which is what IMDb lists.
 
 ### Vista OCAPI chains
 

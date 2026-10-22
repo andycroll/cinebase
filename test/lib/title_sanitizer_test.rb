@@ -101,6 +101,42 @@ class TitleSanitizerTest < Minitest::Test
     assert_common_sanitized("ENHYPEN World Tour 'BLOOD SAGA'", "ENHYPEN WORLD TOUR 'BLOOD SAGA'")
   end
 
+  def test_common_rules_remove_film_year
+    assert_common_sanitized('Street Fighter', 'Street Fighter (2026)')
+  end
+
+  def test_common_rules_remove_film_year_before_other_markers
+    assert_common_sanitized('Kung Fu Soccer', 'Kung Fu Soccer (2026) (Dubbed)')
+  end
+
+  def test_common_rules_remove_re_release
+    assert_common_sanitized('Zindagi Na Milegi Dobara', 'Zindagi Na Milegi Dobara (Re-release) (Hindi)')
+  end
+
+  def test_common_rules_remove_lithuanian_version
+    assert_common_sanitized('(ne)tobuli melagiai', '(ne)tobuli melagiai (Lithuanian)')
+  end
+
+  def test_common_rules_remove_season_prefix_and_year
+    assert_common_sanitized('From Dusk Till Dawn', 'Horror Season 2026 From Dusk Till Dawn (1996)')
+  end
+
+  def test_film_year_from_trailing_year
+    assert_equal(2026, Cinebase::TitleSanitizer.film_year('Street Fighter (2026)'))
+    assert_equal(1996, Cinebase::TitleSanitizer.film_year('Horror Season 2026 From Dusk Till Dawn (1996)'))
+  end
+
+  def test_film_year_before_other_markers
+    assert_equal(2026, Cinebase::TitleSanitizer.film_year('Kung Fu Soccer (2026) (Dubbed)'))
+  end
+
+  def test_film_year_without_trailing_year
+    assert_nil(Cinebase::TitleSanitizer.film_year('Blade Runner 2049'))
+    assert_nil(Cinebase::TitleSanitizer.film_year('2001: A Space Odyssey'))
+    assert_nil(Cinebase::TitleSanitizer.film_year('(500) Days of Summer'))
+    assert_nil(Cinebase::TitleSanitizer.film_year('Cine-Excess 2026: Scum Of The Earth'))
+  end
+
   def test_common_rules_keep_titles_with_their_own_subtitles
     [
       'Harry Potter and the Deathly Hallows: Part 1',
@@ -109,7 +145,10 @@ class TitleSanitizerTest < Minitest::Test
       'Rammstein - Live in Mexico City',
       'Ozzy & Black Sabbath: Back to the Beginning',
       "BTS 'ARIRANG' IN BUENOS AIRES: LIVE VIEWING",
-      '3 Days to Kill'
+      '3 Days to Kill',
+      'Blade Runner 2049',
+      '2001: A Space Odyssey',
+      '(500) Days of Summer'
     ].each { |title| assert_common_sanitized(title, title) }
   end
 

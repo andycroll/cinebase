@@ -9,7 +9,8 @@ module Cinebase
     PREFIXES = [
       /\A(Cine-Excess) (20\d{2}): /,
       /\A(Cinemagic) (\d{4}) -/,
-      /\A(UKJFF) -/
+      /\A(UKJFF) -/,
+      /\A(Horror Season) (20\d{2}) /
     ].freeze
 
     # @param [String] title raw film title

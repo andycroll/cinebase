@@ -9,6 +9,7 @@ module Cinebase
     attr_reader :cinema_name
     attr_reader :festival
     attr_reader :film_name
+    attr_reader :film_year
     attr_reader :language
 
     def initialize(options)
@@ -18,6 +19,7 @@ module Cinebase
       @dimension   = options.fetch(:dimension, '2d')
       @festival    = options.fetch(:festival, nil)
       @film_name   = options.fetch(:film_name)
+      @film_year   = options.fetch(:film_year, nil)
       @language    = options.fetch(:language, nil)
       @time        = options.fetch(:starting_at)
       @variant     = options.fetch(:variant, [])

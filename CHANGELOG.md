@@ -2,6 +2,15 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.3.0] - 2026-10-22
+### Added
+- `Performance#film_year` with an optional `film_year:` option, and `TitleSanitizer.film_year` reading a trailing `(1996)` from a title
+- `COMMON_REMOVE` strips that year, `(Re-release)` and Lithuanian versions
+- `Horror Season` title prefixes are festivals, so `Horror Season 2026 From Dusk Till Dawn (1996)` becomes `From Dusk Till Dawn`, year 1996, in the Horror Season 2026
+
+### Fixed
+- Indentation of tests added in 5.2.0
+
 ## [5.2.0] - 2026-10-22
 ### Added
 - `Performance#festival`, `#language` and `#subtitled?`, with optional `festival:` and `language:` options

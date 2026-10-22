@@ -55,12 +55,14 @@ module CinemaChainName
     class TitleSanitizer < Cinebase::TitleSanitizer
       private
 
+      # Chain patterns first, so markers like trailing sing-alongs are at the
+      # end of the title by the time the common rules run
       def remove
-        COMMON_REMOVE + [] # chain-specific patterns
+        [] + COMMON_REMOVE # chain-specific patterns, then the common ones
       end
 
       def replace
-        COMMON_REPLACE.merge({}) # { core title regex => replacement text }
+        {}.merge(COMMON_REPLACE) # { core title regex => replacement text }
       end
     end
   end

@@ -29,8 +29,8 @@ module Cinebase
 end
 
 module Cinebase
-  # Rules every chain can share; subclasses opt in, e.g.
-  # `COMMON_REMOVE + [...]` in #remove
+  # Rules every chain can share; subclasses opt in after their own patterns,
+  # e.g. `[...] + COMMON_REMOVE` in #remove
   class TitleSanitizer
     LANGUAGES = %w(Arabic Cantonese French Hindi Kannada Korean Malayalam
                    Mandarin Marathi Polish Punjabi Tamil Telugu Turkish).freeze

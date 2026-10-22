@@ -78,6 +78,21 @@ class TitleSanitizerTest < Minitest::Test
     assert_common_sanitized("Charlie Shaw's Revenge", "Charlie Shaw's Revenge + In-Person Q&A")
   end
 
+  def test_common_rules_remove_named_q_and_a
+    assert_common_sanitized('NOFX: 40 Years', 'NOFX: 40 Years + Zoom Q+A')
+    assert_common_sanitized('London Breeze: Miss Jobson', 'London Breeze: Miss Jobson + director Q&A')
+    assert_common_sanitized("It's Nice Up North", "It's Nice Up North (20th Anniversary) + Q+A")
+  end
+
+  def test_common_rules_remove_discussion
+    assert_common_sanitized("Pan's Labyrinth", "Pan's Labyrinth 4K + Discussion")
+  end
+
+  def test_common_rules_remove_film_gauge
+    assert_common_sanitized('The Odyssey', 'The Odyssey (70mm)')
+    assert_common_sanitized('Vertigo', 'Vertigo (35mm)')
+  end
+
   def test_common_rules_remove_encore
     assert_common_sanitized('Avengers Endgame', 'Avengers Endgame: Encore')
   end
@@ -93,6 +108,7 @@ class TitleSanitizerTest < Minitest::Test
 
   def test_common_rules_standardise_arts_seasons
     assert_common_sanitized('Met Opera: Tosca', 'Met Opera 2026-27: Tosca')
+    assert_common_sanitized('Met Opera: Macbeth', 'Met Opera Encore 2026-27: Macbeth')
     assert_common_sanitized('Royal Ballet and Opera: Manon', 'RBO Cinema Season 2026-27: Manon')
     assert_common_sanitized('Royal Ballet and Opera: Alice', 'RBO 2026-27: Alice')
   end
@@ -148,7 +164,9 @@ class TitleSanitizerTest < Minitest::Test
       '3 Days to Kill',
       'Blade Runner 2049',
       '2001: A Space Odyssey',
-      '(500) Days of Summer'
+      '(500) Days of Summer',
+      "We're Going on a Bear Hunt + Tiger Who Came To Tea",
+      '4K Restoration Stories'
     ].each { |title| assert_common_sanitized(title, title) }
   end
 

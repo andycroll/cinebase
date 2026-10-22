@@ -8,7 +8,8 @@ module Cinebase
     # Makes guest-token GET requests to a chain's OCAPI
     class Client
       # @param [String] base_url e.g. 'https://vwc.odeon.co.uk/WSVistaWebClient/ocapi/v1/'
-      # @param [String] region_code Connect-Region-Code header, e.g. 'UK' or 'GB'
+      # @param [String, nil] region_code Connect-Region-Code header, e.g. 'UK'
+      #   or 'GB'; nil for chains whose API rejects every region code
       # @param [String, nil] token raw guest JWT, without the "Bearer " prefix
       def initialize(base_url:, region_code:, token:)
         @base_url = base_url
@@ -44,7 +45,7 @@ module Cinebase
         uri.query = URI.encode_www_form(query) unless query.empty?
         request = Net::HTTP::Get.new(uri)
         request['Authorization'] = "Bearer #{@token}"
-        request['Connect-Region-Code'] = @region_code
+        request['Connect-Region-Code'] = @region_code if @region_code
         request['Accept'] = 'application/json'
         Net::HTTP.start(uri.host, uri.port, use_ssl: true, open_timeout: 10, read_timeout: 30) do |http|
           http.request(request)

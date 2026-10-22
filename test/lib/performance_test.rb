@@ -202,71 +202,92 @@ class PerformanceTest < Minitest::Test
     assert_equal(%w(are here so we), Cinebase::Performance.new(options).variant)
   end
 
-def test_abstract_class_festival_returns_nil_default
-  options = {
-    cinema_id:   123,
-    cinema_name: 'Cinema',
-    film_name:   'Film Name',
-    starting_at: Time.now
-  }
-  assert_nil(Cinebase::Performance.new(options).festival)
-end
+  def test_abstract_class_festival_returns_nil_default
+    options = {
+      cinema_id:   123,
+      cinema_name: 'Cinema',
+      film_name:   'Film Name',
+      starting_at: Time.now
+    }
+    assert_nil(Cinebase::Performance.new(options).festival)
+  end
 
-def test_abstract_class_festival_returns_value
-  festival = Cinebase::Festival.new(name: 'Cine-Excess', year: 2026)
-  options = {
-    cinema_id:   123,
-    cinema_name: 'Cinema',
-    festival:    festival,
-    film_name:   'Film Name',
-    starting_at: Time.now
-  }
-  assert_equal(festival, Cinebase::Performance.new(options).festival)
-end
+  def test_abstract_class_festival_returns_value
+    festival = Cinebase::Festival.new(name: 'Cine-Excess', year: 2026)
+    options = {
+      cinema_id:   123,
+      cinema_name: 'Cinema',
+      festival:    festival,
+      film_name:   'Film Name',
+      starting_at: Time.now
+    }
+    assert_equal(festival, Cinebase::Performance.new(options).festival)
+  end
 
-def test_abstract_class_language_returns_nil_default
-  options = {
-    cinema_id:   123,
-    cinema_name: 'Cinema',
-    film_name:   'Film Name',
-    starting_at: Time.now
-  }
-  assert_nil(Cinebase::Performance.new(options).language)
-end
+  def test_abstract_class_film_year_returns_nil_default
+    options = {
+      cinema_id:   123,
+      cinema_name: 'Cinema',
+      film_name:   'Film Name',
+      starting_at: Time.now
+    }
+    assert_nil(Cinebase::Performance.new(options).film_year)
+  end
 
-def test_abstract_class_language_returns_value
-  options = {
-    cinema_id:   123,
-    cinema_name: 'Cinema',
-    film_name:   'Film Name',
-    language:    'Korean',
-    starting_at: Time.now
-  }
-  assert_equal('Korean', Cinebase::Performance.new(options).language)
-end
+  def test_abstract_class_film_year_returns_value
+    options = {
+      cinema_id:   123,
+      cinema_name: 'Cinema',
+      film_name:   'From Dusk Till Dawn',
+      film_year:   1996,
+      starting_at: Time.now
+    }
+    assert_equal(1996, Cinebase::Performance.new(options).film_year)
+  end
 
-def test_abstract_class_subtitled_false_by_default
-  options = {
-    cinema_id:   123,
-    cinema_name: 'Cinema',
-    film_name:   'Film Name',
-    starting_at: Time.now
-  }
-  refute(Cinebase::Performance.new(options).subtitled?)
-end
+  def test_abstract_class_language_returns_nil_default
+    options = {
+      cinema_id:   123,
+      cinema_name: 'Cinema',
+      film_name:   'Film Name',
+      starting_at: Time.now
+    }
+    assert_nil(Cinebase::Performance.new(options).language)
+  end
 
-def test_abstract_class_subtitled_with_subtitled_variant
-  options = {
-    cinema_id:   123,
-    cinema_name: 'Cinema',
-    film_name:   'Film Name',
-    starting_at: Time.now,
-    variant:     %w(Subtitled imax)
-  }
-  assert(Cinebase::Performance.new(options).subtitled?)
-end
+  def test_abstract_class_language_returns_value
+    options = {
+      cinema_id:   123,
+      cinema_name: 'Cinema',
+      film_name:   'Film Name',
+      language:    'Korean',
+      starting_at: Time.now
+    }
+    assert_equal('Korean', Cinebase::Performance.new(options).language)
+  end
 
-# Tests for implemented subclass
+  def test_abstract_class_subtitled_false_by_default
+    options = {
+      cinema_id:   123,
+      cinema_name: 'Cinema',
+      film_name:   'Film Name',
+      starting_at: Time.now
+    }
+    refute(Cinebase::Performance.new(options).subtitled?)
+  end
+
+  def test_abstract_class_subtitled_with_subtitled_variant
+    options = {
+      cinema_id:   123,
+      cinema_name: 'Cinema',
+      film_name:   'Film Name',
+      starting_at: Time.now,
+      variant:     %w(Subtitled imax)
+    }
+    assert(Cinebase::Performance.new(options).subtitled?)
+  end
+
+  # Tests for implemented subclass
 
   def test_subclass_at_returns_cinema_id
     assert_equal(123, TestPerformance.at(123))

@@ -1,9 +1,6 @@
 # Cinebase
 
 [![](https://img.shields.io/gem/v/cinebase.svg)](http://rubygems.org/gems/cinebase)
-[![](https://img.shields.io/travis/andycroll/cinebase.svg)](https://travis-ci.org/andycroll/cinebase)
-[![](https://img.shields.io/codeclimate/github/andycroll/cinebase.svg)](https://codeclimate.com/github/andycroll/cinebase)
-[![](https://img.shields.io/codeclimate/coverage/github/andycroll/cinebase.svg)](https://codeclimate.com/github/andycroll/cinebase/coverage)
 ![](https://img.shields.io/github/license/andycroll/cinebase.svg)
 
 A basic interface for a series of cinema gems.
@@ -44,9 +41,11 @@ module CinemaChainName
 end
 
 module CinemaChainName
-  class Screening < Cinebase::Screening
+  class Performance < Cinebase::Performance
     def self.at(cinema_id)
-      # parse webpages or apis to get screenings for a cinema
+      # parse webpages or apis to get performances for a cinema, built with
+      # booking_url:, cinema_id:, cinema_name:, dimension:, festival:,
+      # film_name:, language:, starting_at: and variant:
     end
   end
 end
@@ -56,16 +55,77 @@ module CinemaChainName
     class TitleSanitizer < Cinebase::TitleSanitizer
       private
 
+      # Chain patterns first, so markers like trailing sing-alongs are at the
+      # end of the title by the time the common rules run
       def remove
-        # []
+        [] + COMMON_REMOVE # chain-specific patterns, then the common ones
       end
 
       def replace
-        # { core title regex => replacement text }
+        {}.merge(COMMON_REPLACE) # { core title regex => replacement text }
       end
     end
   end
 end
+```
+
+### Festivals
+
+A festival is an annual event, so `Cinebase::Festival` holds the name and the
+edition year. Pass it to a performance as `festival:`.
+
+```ruby
+Cinebase::Festival.from_title('Cine-Excess 2026: Scum Of The Earth', year: 2026)
+#=> #<data Cinebase::Festival name="Cine-Excess", year=2026>
+
+# No year in the title, so the screening's year is the edition
+Cinebase::Festival.from_title('UKJFF - From Cable Street To Brick Lane', year: 2026)
+#=> #<data Cinebase::Festival name="UKJFF", year=2026>
+```
+
+`COMMON_REMOVE` strips the same prefixes from titles.
+
+### Vista OCAPI chains
+
+Chains whose websites run on Vista share a client, guest token retrieval and
+packaging. These are not loaded by `require 'cinebase'`:
+
+```ruby
+require 'cinebase/vista'
+
+client = Cinebase::Vista::Client.new(
+  base_url: 'https://vwc.odeon.co.uk/WSVistaWebClient/ocapi/v1/',
+  region_code: 'UK',
+  token: guest_jwt
+)
+client.get('sites')
+
+module CinemaChainName
+  class GuestToken < Cinebase::Vista::GuestToken
+    PAGE_URL = 'https://www.example.co.uk/page-with-the-token/'.freeze
+
+    private
+
+    def bundled_curl
+      File.expand_path('../../vendor/curl-impersonate/bin/curl-impersonate', __dir__)
+    end
+
+    def extract_token(html)
+      # return the guest JWT from the page
+    end
+  end
+end
+```
+
+`GuestToken#fetch` runs `curl-impersonate` with a Chrome profile, checks the
+token's declared expiry and raises `Cinebase::Vista::AuthenticationError` when
+it cannot get a current token. To ship curl-impersonate inside platform gems,
+add this to the chain gem's Rakefile:
+
+```ruby
+require 'cinebase/vista/package_task'
+Cinebase::Vista::PackageTask.new('chain_name.gemspec')
+# rake 'package:native[arm64-darwin]' or rake package:all
 ```
 
 ## Contributing

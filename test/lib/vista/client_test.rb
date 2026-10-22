@@ -31,6 +31,23 @@ class VistaClientTest < Minitest::Test
                  client.get('showtimes/by-business-date/2026-10-24', 'siteIds' => %w(017 824)))
   end
 
+  def test_get_reuses_one_connection
+    stub_request(:get, "#{BASE_URL}sites").to_return(status: 200, body: '{"sites":[]}')
+    shared = client
+    starts = count_connection_starts { 3.times { shared.get('sites') } }
+
+    assert_equal 1, starts
+  end
+
+  def test_concurrent_gets_on_one_client_all_succeed
+    stub_request(:get, "#{BASE_URL}sites").to_return(status: 200, body: '{"sites":[]}')
+    shared = client
+
+    results = Array.new(4) { Thread.new { shared.get('sites') } }.map(&:value)
+
+    assert_equal [{ 'sites' => [] }] * 4, results
+  end
+
   def test_get_without_token_raises_before_request
     assert_raises(Cinebase::Vista::AuthenticationError) { client(token: nil).get('sites') }
     assert_raises(Cinebase::Vista::AuthenticationError) { client(token: ' ').get('sites') }
@@ -50,6 +67,21 @@ class VistaClientTest < Minitest::Test
   end
 
   private
+
+  def count_connection_starts
+    starts = 0
+    counter = Module.new do
+      define_method(:start) do |*args, **options, &block|
+        starts += 1
+        super(*args, **options, &block)
+      end
+    end
+    Net::HTTP.singleton_class.prepend(counter)
+    yield
+    starts
+  ensure
+    counter.send(:remove_method, :start)
+  end
 
   def client(token: 'guest-jwt')
     Cinebase::Vista::Client.new(base_url: BASE_URL, region_code: 'UK', token: token)

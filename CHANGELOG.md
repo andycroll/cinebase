@@ -2,6 +2,10 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.5.0] - 2026-10-22
+### Changed
+- `Vista::Client` keeps one connection open for all its requests instead of opening a new TLS connection each time, which cost over ten times the request itself. Requests on one client are serialised, so a client can be shared between threads.
+
 ## [5.4.0] - 2026-10-22
 ### Added
 - `Vista::Client` accepts `region_code: nil` and then sends no `Connect-Region-Code` header, for chains such as Picturehouse whose API rejects every region code

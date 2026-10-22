@@ -2,6 +2,14 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.2.0] - 2026-10-22
+### Added
+- `Performance#festival`, `#language` and `#subtitled?`, with optional `festival:` and `language:` options
+- `Cinebase::Festival` value object (`name`, `year`) and `Festival.from_title`
+- `TitleSanitizer::COMMON_REMOVE` and `COMMON_REPLACE`: opt-in rules for dub and subtitle versions, language versions, anniversaries, Q&A add-ons, encores, sing-alongs, festival prefixes, opera and ballet seasons, and `WORLD TOUR` capitals
+- `cinebase/vista`, loaded only on request, for chains on Vista OCAPI: `Vista::Client`, a `Vista::GuestToken` template and `Vista::PackageTask` for platform gems bundling curl-impersonate
+- CI on Ruby 4.0
+
 ## [5.1.0] - 2025-10-31
 ### Changed
 - Converted all test files from minitest spec syntax to vanilla minitest syntax

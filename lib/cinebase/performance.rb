@@ -7,14 +7,18 @@ module Cinebase
     attr_reader :dimension
     attr_reader :cinema_id
     attr_reader :cinema_name
+    attr_reader :festival
     attr_reader :film_name
+    attr_reader :language
 
     def initialize(options)
       @booking_url = options.fetch(:booking_url, nil)
       @cinema_name = options.fetch(:cinema_name)
       @cinema_id   = options.fetch(:cinema_id)
       @dimension   = options.fetch(:dimension, '2d')
+      @festival    = options.fetch(:festival, nil)
       @film_name   = options.fetch(:film_name)
+      @language    = options.fetch(:language, nil)
       @time        = options.fetch(:starting_at)
       @variant     = options.fetch(:variant, [])
     end
@@ -40,6 +44,11 @@ module Cinebase
     def variant
       @variant = @variant.split(' ') if @variant.is_a?(String)
       @variant.map(&:downcase).sort.uniq
+    end
+
+    # English subtitles or open captions
+    def subtitled?
+      variant.include?('subtitled')
     end
   end
 end

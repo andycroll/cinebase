@@ -47,7 +47,10 @@ module Cinebase
       /\(\d+(st|nd|rd|th) Anniversary\)/i,              # anniversary re-release
       /\(Re-release\)/i,                                # re-release
       FILM_YEAR,                                        # film year, see .film_year
-      /\s*\+\s*(In-Person )?Q&A\z/i,                    # Q&A add-on
+      /\s*\+\s*(?:[\w-]+\s+)*Q(?:&|\+)A\z/i,            # Q&A add-on
+      /\s*\+\s*Discussion\z/i,                          # discussion add-on
+      /\s*\((35|70)mm\)/i,                              # film gauge
+      /\s+4K\b/,                                        # 4K restoration
       /:\s*Encore\z/i,                                  # encore
       /\bsing-?a-?long\z/i,                             # singalong
       'amp;'                                            # html ampersands
@@ -60,7 +63,7 @@ module Cinebase
     end
 
     COMMON_REPLACE = {
-      /Met Opera 20\d{2}-\d{2}: (.*)/              => 'Met Opera: ',
+      /Met Opera (?:Encore )?20\d{2}-\d{2}: (.*)/  => 'Met Opera: ',
       /RBO (?:Cinema Season )?20\d{2}-\d{2}: (.*)/ => 'Royal Ballet and Opera: ',
       /WORLD TOUR(.*)/                             => 'World Tour'
     }.freeze

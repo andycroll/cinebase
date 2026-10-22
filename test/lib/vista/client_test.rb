@@ -13,6 +13,16 @@ class VistaClientTest < Minitest::Test
     assert_equal({ 'sites' => [] }, client.get('sites'))
   end
 
+  def test_get_without_region_omits_header
+    stub_request(:get, "#{BASE_URL}sites")
+      .with { |request| !request.headers.key?('Connect-Region-Code') }
+      .to_return(status: 200, body: '{"sites":[]}')
+
+    client = Cinebase::Vista::Client.new(base_url: BASE_URL, region_code: nil, token: 'guest-jwt')
+
+    assert_equal({ 'sites' => [] }, client.get('sites'))
+  end
+
   def test_get_repeats_array_query_values
     stub_request(:get, "#{BASE_URL}showtimes/by-business-date/2026-10-24?siteIds=017&siteIds=824")
       .to_return(status: 200, body: '{"showtimes":[]}')

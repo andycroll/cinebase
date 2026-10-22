@@ -21,6 +21,11 @@ class FestivalTest < Minitest::Test
     assert_equal(Cinebase::Festival.new(name: 'Horror Season', year: 2026), festival)
   end
 
+  def test_from_title_with_cambridge_film_festival
+    festival = Cinebase::Festival.from_title('CFF: Rocket Girl', year: 2026)
+    assert_equal(Cinebase::Festival.new(name: 'CFF', year: 2026), festival)
+  end
+
   def test_from_title_without_festival_returns_nil
     assert_nil(Cinebase::Festival.from_title('Spider-Man: Brand New Day', year: 2026))
   end

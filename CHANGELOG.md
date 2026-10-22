@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.4.0] - 2026-10-22
+### Added
+- `Vista::Client` accepts `region_code: nil` and then sends no `Connect-Region-Code` header, for chains such as Picturehouse whose API rejects every region code
+- `COMMON_REMOVE` strips any `+ ... Q&A` or `+ ... Q+A` add-on, `+ Discussion`, `(35mm)`, `(70mm)` and a `4K` marker
+- `Met Opera Encore 2026-27:` titles standardise like other Met Opera seasons
+- `CFF:` (Cambridge Film Festival) title prefixes are festivals
+
 ## [5.3.0] - 2026-10-22
 ### Added
 - `Performance#film_year` with an optional `film_year:` option, and `TitleSanitizer.film_year` reading a trailing `(1996)` from a title

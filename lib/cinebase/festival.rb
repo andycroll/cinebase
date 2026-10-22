@@ -10,6 +10,7 @@ module Cinebase
       /\A(Cine-Excess) (20\d{2}): /,
       /\A(Cinemagic) (\d{4}) -/,
       /\A(UKJFF) -/,
+      /\A(CFF): /,
       /\A(Horror Season) (20\d{2}) /
     ].freeze
 

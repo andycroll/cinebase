@@ -15,6 +15,7 @@ module Cinebase
         @base_url = base_url
         @region_code = region_code
         @token = token
+        @mutex = Mutex.new
       end
 
       # @param [String] path relative to the base URL
@@ -47,9 +48,15 @@ module Cinebase
         request['Authorization'] = "Bearer #{@token}"
         request['Connect-Region-Code'] = @region_code if @region_code
         request['Accept'] = 'application/json'
-        Net::HTTP.start(uri.host, uri.port, use_ssl: true, open_timeout: 10, read_timeout: 30) do |http|
-          http.request(request)
-        end
+        @mutex.synchronize { connection(uri).request(request) }
+      end
+
+      # A new TLS connection per request costs over ten times the request
+      # itself. Net::HTTP reconnects after its keep-alive timeout and retries
+      # a GET once on a dropped connection.
+      def connection(uri)
+        @connection ||= Net::HTTP.start(uri.host, uri.port, use_ssl: true,
+                                                            open_timeout: 10, read_timeout: 30)
       end
     end
   end

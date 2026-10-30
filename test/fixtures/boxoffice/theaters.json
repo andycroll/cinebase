@@ -1,0 +1,56 @@
+{
+  "data": {
+    "allTheater": {
+      "nodes": [
+        {
+          "id": "X0001",
+          "path": "/theaters/x0001-example-high-street",
+          "name": "High Street",
+          "timeZone": "Europe/London",
+          "country": { "name": "United Kingdom", "iso31661A2": "GB" },
+          "practicalInfo": {
+            "closed": false,
+            "coordinates": { "latitude": 51.5, "longitude": -0.15 },
+            "location": { "address": "1 Example Street", "city": "London", "state": "Greater London", "zip": "W1U 0ZZ" }
+          }
+        },
+        {
+          "id": "G0002",
+          "path": "/theaters/g0002-example-riverside",
+          "name": "Riverside",
+          "timeZone": "Europe/London",
+          "country": { "name": "United Kingdom", "iso31661A2": "GB" },
+          "practicalInfo": {
+            "closed": false,
+            "coordinates": null,
+            "location": { "address": "2 Example Square", "city": "Marlow", "state": "South England", "zip": "sl7  0zz" }
+          }
+        },
+        {
+          "id": "X99ZZ",
+          "path": "/theaters/x99zz-example-closed",
+          "name": "Closed Example",
+          "timeZone": "Europe/London",
+          "country": { "name": "United Kingdom", "iso31661A2": "GB" },
+          "practicalInfo": {
+            "closed": true,
+            "coordinates": null,
+            "location": { "address": "3 Example Road", "city": "Example", "state": "North England", "zip": "EX1 0ZZ" }
+          }
+        },
+        {
+          "id": "Y00AA",
+          "path": "/theaters/y00aa-example-dublin",
+          "name": "Dublin Example",
+          "timeZone": "Europe/Dublin",
+          "country": { "name": "Ireland", "iso31661A2": "IE" },
+          "practicalInfo": {
+            "closed": false,
+            "coordinates": null,
+            "location": { "address": "4 Example Quay", "city": "Dublin", "state": null, "zip": "D01 X0Z0" }
+          }
+        }
+      ]
+    }
+  }
+}

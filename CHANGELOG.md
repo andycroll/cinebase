@@ -7,6 +7,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - `Cinema#latitude` and `Cinema#longitude`, `nil` by default. Chain gems return Floats in decimal degrees when they know where a cinema is.
 - `Vista::TokenHolder` for chain modules: `token`, `acquire_token!`, `ensure_token!` (fetches only when there is no token or it expires within `RENEWAL_MARGIN`, an hour), `token_expires_at` and `reject_token!`
 - `Vista::GuestToken.expires_at(token)` reads a JWT's `exp` claim
+- `cinebase/boxoffice`, loaded only on request, for chains whose websites run on Webedia's "Movies Pro" theme and sell tickets through Boxoffice, such as Everyman and Showcase. Extracted from `everyman_uk`.
+- `Boxoffice::Client` reads theatres from the website's daily static build and showtimes and films from its `/api/gatsby-source-boxofficeapi/` routes, with no token. It retries dropped connections, and a whole year of one theatre's showtimes is one request.
+- `Boxoffice::Showtime` reads a showtime's start in the theatre's time zone, booking link (the chain's `default` provider first, then any other), dimension, language and variants. `VARIANTS` maps Boxoffice's own tags; chains pass `variants:` with their own tags merged in.
+- `Boxoffice::Cinema` and `Boxoffice::Performance` base classes. A chain defines `Cinema.website` and `#brand`, and `Performance.cinema_class`, `.title_sanitizer` and optionally `.variants`.
 
 ## [5.5.0] - 2026-10-22
 ### Changed

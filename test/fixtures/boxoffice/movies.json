@@ -1,0 +1,6 @@
+[
+  { "id": "1001", "title": "The Example Film", "runtime": 6000, "release": "2026-10-23T00:00:00.000Z" },
+  { "id": "1002", "title": "Imaginary Picture (1985)", "runtime": 5400, "release": "2026-10-09T00:00:00.000Z" },
+  { "id": "1003", "title": "Preview: Made Up Movie", "runtime": 7200, "release": "2026-10-25T00:00:00.000Z" },
+  { "id": "1004", "title": "CFF: Mystery Matinee (Tamil)", "runtime": 6600, "release": "2026-10-25T00:00:00.000Z" }
+]

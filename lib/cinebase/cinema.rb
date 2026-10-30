@@ -40,8 +40,16 @@ module Cinebase
       @full_name ||= "#{brand} #{name}"
     end
 
+    def latitude
+      nil
+    end
+
     def locality
       adr[:locality].to_s
+    end
+
+    def longitude
+      nil
     end
 
     def postal_code

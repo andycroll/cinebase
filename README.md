@@ -37,6 +37,14 @@ module CinemaChainName
     end
 
     # define address methods
+
+    def latitude
+      # Float in decimal degrees, or nil when unknown (the default)
+    end
+
+    def longitude
+      # Float in decimal degrees, or nil when unknown (the default)
+    end
   end
 end
 

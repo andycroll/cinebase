@@ -27,7 +27,8 @@ module Cinebase
         'Showtime.Restriction.SilverScreen' => 'senior'
       }.freeze
 
-      THREE_D = 'Format.Projection.3d'
+      # Format.Projection.3d, or RealD3D alone on Showcase's XPlus RealD 3D
+      THREE_D = /\.(RealD)?3d\z/i
       LANGUAGE = /\ALocalization\.Language\.(\w+)\z/
 
       # @param [Hash] showtime one showtime from the schedule
@@ -50,7 +51,7 @@ module Cinebase
 
       # @return [String] '2d' or '3d'
       def dimension
-        tags.any? { |tag| tag.casecmp?(THREE_D) } ? '3d' : '2d'
+        tags.any? { |tag| tag.match?(THREE_D) } ? '3d' : '2d'
       end
 
       # @return [String, nil] audio language, e.g. 'Korean'

@@ -39,8 +39,9 @@ class BoxofficeShowtimeTest < Minitest::Test
   def test_dimension
     assert_equal '3d', showtime('tags' => ['Format.Projection.3d']).dimension
     assert_equal '3d', showtime('tags' => ['Format.Projection.3D']).dimension
-    assert_equal '2d', showtime('tags' => ['Format.Projection.Digital']).dimension
-  end
+    assert_equal '3d', showtime('tags' => %w(Auditorium.Experience.PLF Auditorium.Experience.RealD3D)).dimension
+    assert_equal '3d', showtime('tags' => ['Format.Projection.RealD3D']).dimension
+    assert_equal '2d', showtime('tags' => ['Format.Projection.Digital']).dimension  end
 
   def test_variant_ignores_unknown_tags_and_repeats
     tags = %w(

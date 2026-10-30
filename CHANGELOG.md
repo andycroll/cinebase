@@ -9,7 +9,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - `Vista::GuestToken.expires_at(token)` reads a JWT's `exp` claim
 - `cinebase/boxoffice`, loaded only on request, for chains whose websites run on Webedia's "Movies Pro" theme and sell tickets through Boxoffice, such as Everyman and Showcase. Extracted from `everyman_uk`.
 - `Boxoffice::Client` reads theatres from the website's daily static build and showtimes and films from its `/api/gatsby-source-boxofficeapi/` routes, with no token. It retries dropped connections, and a whole year of one theatre's showtimes is one request.
-- `Boxoffice::Showtime` reads a showtime's start in the theatre's time zone, booking link (the chain's `default` provider first, then any other), dimension, language and variants. `VARIANTS` maps Boxoffice's own tags; chains pass `variants:` with their own tags merged in.
+- `Boxoffice::Showtime` reads a showtime's start in the theatre's time zone, booking link (the chain's `default` provider first, then any other), dimension (`3d` or `RealD3D` tags), language and variants. `VARIANTS` maps Boxoffice's own tags; chains pass `variants:` with their own tags merged in.
 - `Boxoffice::Cinema` and `Boxoffice::Performance` base classes. A chain defines `Cinema.website` and `#brand`, and `Performance.cinema_class`, `.title_sanitizer` and optionally `.variants`.
 
 ## [5.5.0] - 2026-10-22

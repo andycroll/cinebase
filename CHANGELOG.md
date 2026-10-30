@@ -5,6 +5,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ## [5.6.0] - Unreleased
 ### Added
 - `Cinema#latitude` and `Cinema#longitude`, `nil` by default. Chain gems return Floats in decimal degrees when they know where a cinema is.
+- `Vista::TokenHolder` for chain modules: `token`, `acquire_token!`, `ensure_token!` (fetches only when there is no token or it expires within `RENEWAL_MARGIN`, an hour), `token_expires_at` and `reject_token!`
+- `Vista::GuestToken.expires_at(token)` reads a JWT's `exp` claim
 
 ## [5.5.0] - 2026-10-22
 ### Changed

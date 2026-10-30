@@ -12,3 +12,4 @@ end
 
 require 'cinebase/vista/client'
 require 'cinebase/vista/guest_token'
+require 'cinebase/vista/token_holder'

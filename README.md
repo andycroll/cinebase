@@ -140,7 +140,32 @@ end
 
 `GuestToken#fetch` runs `curl-impersonate` with a Chrome profile, checks the
 token's declared expiry and raises `Cinebase::Vista::AuthenticationError` when
-it cannot get a current token. To ship curl-impersonate inside platform gems,
+it cannot get a current token. `GuestToken.expires_at(token)` reads a token's
+`exp` claim as a `Time`, or `nil` when it cannot.
+
+A chain module keeps its token by extending `TokenHolder`:
+
+```ruby
+module CinemaChainName
+  extend Cinebase::Vista::TokenHolder
+
+  def self.guest_token_class
+    Internal::GuestToken
+  end
+end
+
+CinemaChainName.token = guest_jwt        # set one you already have
+CinemaChainName.acquire_token!           # always fetches a new token
+CinemaChainName.ensure_token!            # fetches only when there is no token
+                                         # or it expires within an hour
+CinemaChainName.token_expires_at         #=> 2026-10-30 18:00:00 +0000
+CinemaChainName.reject_token!(rejected)  # forgets a token the API rejected
+```
+
+API calls never fetch a token themselves. When the API rejects a token, the
+chain gem calls `reject_token!` and re-raises, so the next `ensure_token!`
+fetches a fresh one. `reject_token!` keeps a token set since the rejected
+request. To ship curl-impersonate inside platform gems,
 add this to the chain gem's Rakefile:
 
 ```ruby

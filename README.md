@@ -174,6 +174,52 @@ Cinebase::Vista::PackageTask.new('chain_name.gemspec')
 # rake 'package:native[arm64-darwin]' or rake package:all
 ```
 
+### Boxoffice chains
+
+Chains whose websites run on Webedia's "Movies Pro" theme and sell tickets
+through Boxoffice (Everyman, Showcase) share a client and base classes. These
+are not loaded by `require 'cinebase'`:
+
+```ruby
+require 'cinebase/boxoffice'
+
+module CinemaChainName
+  class Cinema < Cinebase::Boxoffice::Cinema
+    def self.website
+      'https://www.example.co.uk'
+    end
+
+    def brand
+      'Example'
+    end
+  end
+
+  class Performance < Cinebase::Boxoffice::Performance
+    def self.cinema_class
+      Cinema
+    end
+
+    def self.title_sanitizer
+      Internal::TitleSanitizer
+    end
+
+    # Optional: the chain's own tags, e.g. screen brands
+    def self.variants
+      super.merge('Internal.Brand.XPlus' => 'xplus')
+    end
+  end
+end
+
+CinemaChainName::Cinema.all                 # open UK theatres, cached for an hour
+CinemaChainName::Performance.at('X0712', from: Date.today, to: Date.today + 365)
+```
+
+`Cinema` gives `adr`, `name`, `url`, `latitude`, `longitude` and
+`time_zone` from the theatre list in the website's daily build.
+`Performance.at` makes one schedule request for the whole range and one
+request per 50 films. `Cinebase::Boxoffice::Client.new(base_url:)` is the
+underlying client, with `theaters`, `schedule` and `movies`.
+
 ## Contributing
 
 1. [Fork it](https://github.com/andycroll/cinebase/fork)

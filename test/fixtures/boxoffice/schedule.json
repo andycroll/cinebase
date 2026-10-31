@@ -1,0 +1,97 @@
+{
+  "X0001": {
+    "schedule": {
+      "1001": {
+        "2026-10-24": [
+          {
+            "id": "1001-2026-10-24 14:00:00",
+            "startsAt": "2026-10-24T14:00:00",
+            "tags": ["Auditorium.Comfort.ReservedSeating", "Format.Projection.Digital", "Showtime.Accessibility.ClosedCaption"],
+            "isExpired": false,
+            "data": {
+              "ticketing": [
+                { "urls": ["https://relay.example.com/ticketing?code_theater=X0001"], "type": "DESKTOP", "provider": "relay" },
+                { "urls": ["https://tickets.example-cinema.com/launch/ticketing/00000000-0000-0000-0000-000000000001"], "type": "DESKTOP", "provider": "default" }
+              ]
+            },
+            "screen": { "name": "1" }
+          },
+          {
+            "id": "1001-2026-10-24 23:45:00",
+            "startsAt": "2026-10-24T23:45:00",
+            "tags": ["Format.Projection.Digital", "Showtime.Restriction.SilverScreen"],
+            "isExpired": false,
+            "data": {
+              "ticketing": [
+                { "urls": ["https://tickets.example-cinema.com/launch/ticketing/00000000-0000-0000-0000-000000000002"], "type": "DESKTOP", "provider": "default" }
+              ]
+            },
+            "screen": { "name": "2" }
+          }
+        ]
+      },
+      "1002": {
+        "2026-10-24": [
+          {
+            "id": "1002-2026-10-24 18:30:00",
+            "startsAt": "2026-10-24T18:30:00",
+            "tags": ["Format.Projection.35mm"],
+            "isExpired": false,
+            "data": {
+              "ticketing": [
+                { "urls": ["https://tickets.example-cinema.com/launch/ticketing/00000000-0000-0000-0000-000000000003"], "type": "DESKTOP", "provider": "default" }
+              ]
+            },
+            "screen": { "name": "1" }
+          }
+        ]
+      },
+      "1003": {
+        "2026-10-25": [
+          {
+            "id": "1003-2026-10-25 11:00:00",
+            "startsAt": "2026-10-25T11:00:00",
+            "tags": ["Format.Projection.3d", "Internal.Brand.Premium", "Showtime.Restriction.LoyaltyOnly"],
+            "isExpired": false,
+            "data": {
+              "ticketing": [
+                { "urls": ["https://tickets.example-cinema.com/launch/ticketing/00000000-0000-0000-0000-000000000004"], "type": "DESKTOP", "provider": "default" }
+              ]
+            },
+            "screen": { "name": "2" }
+          }
+        ]
+      },
+      "1004": {
+        "2026-10-25": [
+          {
+            "id": "1004-2026-10-25 10:00:00",
+            "startsAt": "2026-10-25T10:00:00",
+            "tags": ["Showtime.Restriction.BabyClub"],
+            "isExpired": false,
+            "data": {
+              "ticketing": [
+                { "urls": ["https://tickets.example-cinema.com/launch/ticketing/00000000-0000-0000-0000-000000000005"], "type": "DESKTOP", "provider": "default" }
+              ]
+            },
+            "screen": { "name": "1" }
+          }
+        ]
+      },
+      "1005": {
+        "2026-10-25": [
+          {
+            "id": "1005-2026-10-25 20:00:00",
+            "startsAt": "2026-10-25T20:00:00",
+            "tags": [],
+            "isExpired": false,
+            "data": { "ticketing": [] },
+            "screen": { "name": "1" }
+          }
+        ]
+      }
+    },
+    "moviesTags": {},
+    "showtimesDates": ["2026-10-24", "2026-10-25"]
+  }
+}

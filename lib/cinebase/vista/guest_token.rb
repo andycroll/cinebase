@@ -15,6 +15,16 @@ module Cinebase
         @curl = curl || default_curl
       end
 
+      # @param [String] token a JWT
+      # @return [Time, nil] from the token's exp claim; nil when it has none or
+      #   cannot be read
+      def self.expires_at(token)
+        payload = token.split('.').fetch(1).tr('-_', '+/').unpack1('m')
+        Time.at(Integer(JSON.parse(payload).fetch('exp')))
+      rescue JSON::ParserError, ArgumentError, IndexError, TypeError, NoMethodError
+        nil
+      end
+
       # @return [String] the guest JWT
       # @raise [Cinebase::Vista::AuthenticationError]
       def fetch
@@ -66,9 +76,10 @@ module Cinebase
       end
 
       def validate_expiry!(token)
-        payload = token.split('.').fetch(1).tr('-_', '+/').unpack1('m')
-        claims = JSON.parse(payload)
-        if Integer(claims.fetch('exp')) <= Time.now.to_i
+        expires_at = self.class.expires_at(token)
+        if expires_at.nil?
+          raise AuthenticationError, 'Guest token page data is missing or invalid'
+        elsif expires_at <= Time.now
           raise AuthenticationError, 'Guest token supplied by the page has expired'
         end
       end

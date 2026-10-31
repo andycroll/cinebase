@@ -13,6 +13,8 @@ class TestCinema < Cinebase::Cinema
       country_name: 'TestCountryName'
     }
   end
+  def latitude; 50.8225; end
+  def longitude; -0.1372; end
   def name; 'TestName'; end
   def url; 'TestUrl'; end
 end
@@ -56,6 +58,14 @@ class CinemaTest < Minitest::Test
 
   def test_abstract_class_country_name_returns_empty_string
     assert_equal('', Cinebase::Cinema.new(123).country_name)
+  end
+
+  def test_abstract_class_latitude_returns_nil
+    assert_nil(Cinebase::Cinema.new(123).latitude)
+  end
+
+  def test_abstract_class_longitude_returns_nil
+    assert_nil(Cinebase::Cinema.new(123).longitude)
   end
 
   def test_abstract_class_id_returns_passed_id
@@ -127,6 +137,14 @@ class CinemaTest < Minitest::Test
 
   def test_subclass_locality_returns_test_locality
     assert_equal('TestLocality', TestCinema.new(123).locality)
+  end
+
+  def test_subclass_latitude_returns_test_latitude
+    assert_equal(50.8225, TestCinema.new(123).latitude)
+  end
+
+  def test_subclass_longitude_returns_test_longitude
+    assert_equal(-0.1372, TestCinema.new(123).longitude)
   end
 
   def test_subclass_name_returns_test_name

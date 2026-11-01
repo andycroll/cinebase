@@ -220,6 +220,65 @@ CinemaChainName::Performance.at('X0712', from: Date.today, to: Date.today + 365)
 request per 50 films. `Cinebase::Boxoffice::Client.new(base_url:)` is the
 underlying client, with `theaters`, `schedule` and `movies`.
 
+### A1Web chains
+
+Chains whose websites run on Admit One's A1Web (Arc, Reel, Movie House)
+share a client, a what's on page parser and base classes. These are not
+loaded by `require 'cinebase'`:
+
+```ruby
+require 'cinebase/a1web'
+
+module CinemaChainName
+  class Cinema < Cinebase::A1web::Cinema
+    def self.website
+      'https://www.example.co.uk'
+    end
+
+    # Optional: A1Web sites publish no structured addresses
+    def self.locations
+      {
+        'EX_HIGH' => {
+          street_address: '1 High Street', locality: 'Exampleton', postal_code: 'EX1 1AA',
+          latitude: 52.5, longitude: -1.25
+        }
+      }
+    end
+
+    def brand
+      'Example'
+    end
+  end
+
+  class Performance < Cinebase::A1web::Performance
+    def self.cinema_class
+      Cinema
+    end
+
+    def self.title_sanitizer
+      Internal::TitleSanitizer
+    end
+
+    # Optional: the chain's own showtime icons and headings
+    def self.variants
+      super.merge('Hypersense' => 'hypersense')
+    end
+  end
+end
+
+CinemaChainName::Cinema.all                 # venues in the cinema menu, cached for an hour
+CinemaChainName::Performance.at('EX_HIGH', from: Date.today, to: Date.today + 365)
+```
+
+Cinema ids are A1Web site codes such as `ARC_BEE`. The home page's
+`GlobalSiteData` lists them, and where it does not, each venue's own page
+sets one. `Performance.at` makes one request: the venue's `/whatson` page
+holds every advertised date. `Cinebase::A1web::Listings` reads all three
+known templates, whose date panels are keyed by timestamp (Arc), have a
+timestamp on their tab (Movie House) or have only a label such as
+`Tue 03 Nov` (Reel). Showtime tags are icon names, `a1-event-*` icon
+classes and group headings; `Performance::VARIANTS` maps the shared ones.
+
 ## Contributing
 
 1. [Fork it](https://github.com/andycroll/cinebase/fork)

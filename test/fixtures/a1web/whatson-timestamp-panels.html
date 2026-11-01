@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="EN" class="">
+<head>
+  <meta charset="UTF-8" />
+  <meta data-a1serv="A1Web-FE1" />
+  <title>What&apos;s On | Example Cinema High Street – Cinema listings</title>
+</head>
+<body>
+<div id="scheduleTabs" class="grid">
+  <div class="col-span-1 w-full">
+    <button data-target="1793491200" data-date="01 November" data-picka="01/11/2026"
+      class="tab w-full activeScheduleItem">
+      Today
+    </button>
+  </div>
+  <div class="col-span-1 w-full">
+    <button data-target="1793577600" data-date="02 November" data-picka="02/11/2026"
+      class="tab w-full ">
+      Tomorrow
+    </button>
+  </div>
+</div>
+<div class="bg-white dark:bg-gray-700">
+  <div id="panels" class="container mx-auto px-4 md:px-4">
+    <div id="panel_1793491200" class="panel-0 whatson_panel tab-content divide-y block">
+      <div class="grid grid-cols-none md:grid-cols-2 gap-4 py-3">
+        <div class="py-4 px-4 md:p-4 bg-white dark:bg-gray-700 grid-container-border">
+          <div class="grid grid-cols-3 grid-rows-auto grid-flow-col gap-4 place-content-start">
+            <div class="row-start-1 col-span-1 row-span-1 md:row-span-2">
+              <img class="object-contain object-left-top rounded-br-xl" src="/customFilmImages/1001_0.jpg" alt="The Example Film">
+            </div>
+            <div class="row-start-1 col-span-2">
+              <div class="flex flex-row justify-between items-center  title_min-height">
+                <h2 class="text-accent dark:text-white title_line-clamp">
+                  <a href="/event/1001">The Example Film</a>
+                </h2>
+                <img class="object-scale-down h-6 w-6" src="/ratings/UK/12Asml.png" alt="12A">
+              </div>
+              <p class="text-black dark:text-white">Running time: <span class="text-base text-secondary">120 mins</span></p>
+              <div class="flex flex-row justify-between items-center">
+                <a class="font-body font-semibold text-base text-secondary" onclick="showTrailer('')">Watch trailer</a>
+                <a href="/event/1001" class="font-body font-semibold text-base text-secondary">Details</a>
+              </div>
+            </div>
+            <div class="row-start-2 col-start-1 col-span-3 row-span-1 md:row-start-auto md:col-start-auto">
+              <div class="grid grid-cols-1 gap-x-2 gap-y-3">
+                <a class="block btn-perf font-body text-center  perfButton content-center align-middle" href="https://high-street.example-tickets.co.uk/tickets/?perfCode=5001" style="display:inherit;">
+                  <span class=" text-black bg-gray-100 border-primary border-solid border-2">
+                    <img style="height:11px;vertical-align:inherit;" class="inline-block" style="" src="../assets/perftypeIcons/example_perf-icon-set_premium.svg" alt="Premium Screen icon">                    </span>
+                  <span class="px-3 py-3 lg:py-1 border-primary border-solid border-2">
+                    14:00 - <small>16:00</small>
+                  </span>
+                </a>
+                <a class="block btn-perf font-body text-center  perfButton content-center align-middle" href="https://high-street.example-tickets.co.uk/tickets/?perfCode=5002" style="display:inherit;">
+                  <span class=" text-black bg-gray-100 border-primary border-solid border-2">
+                    <img style="height:11px;vertical-align:inherit;" class="inline-block" style="" src="../assets/perftypeIcons/example_perf-icon-set_parent-and-baby.svg" alt="Parent &amp; Baby icon">                    </span>
+                  <span class="px-3 py-3 lg:py-1 border-primary border-solid border-2">
+                    10:30 - <small>12:30</small>
+                  </span>
+                </a>
+                <a class="block btn-perf font-body text-center  perfButton content-center align-middle" href="https://high-street.example-tickets.co.uk/tickets/?perfCode=5003" style="display:inherit;">
+                  <span class=" text-black bg-gray-100 border-primary border-solid border-2">
+                    <i class="a1-event-subtitles inline-block pr-2 text-primary"  style="vertical-align:sub;"></i><i class="a1-event-wheelchair-none inline-block pr-2 text-primary"></i>                    </span>
+                  <span class="px-3 py-3 lg:py-1 border-primary border-solid border-2">
+                    20:45 - <small>22:45</small>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="py-4 px-4 md:p-4 bg-white dark:bg-gray-700 grid-container-border">
+          <div class="grid grid-cols-3 grid-rows-auto grid-flow-col gap-4 place-content-start">
+            <div class="row-start-1 col-span-2">
+              <div class="flex flex-row justify-between items-center  title_min-height">
+                <h2 class="text-accent dark:text-white title_line-clamp">
+                  <a href="/event/1002">THE EXAMPLE SEQUEL – 3D</a>
+                </h2>
+                <img class="object-scale-down h-6 w-6" src="/ratings/UK/PGsml.png" alt="PG">
+              </div>
+            </div>
+            <div class="row-start-2 col-start-1 col-span-3 row-span-1 md:row-start-auto md:col-start-auto">
+              <div class="grid grid-cols-1 gap-x-2 gap-y-3">
+                <a class="block btn-perf font-body text-center  perfButton content-center align-middle" href="https://high-street.example-tickets.co.uk/tickets/?perfCode=5004" style="display:inherit;">
+                  <span class=" text-black bg-gray-100 border-primary border-solid border-2">
+                    <img style="height:11px;vertical-align:inherit;" class="inline-block" style="" src="../assets/perftypeIcons/example_perf-icon-set_3D.svg" alt="3D icon">                    </span>
+                  <span class="px-3 py-3 lg:py-1 border-primary border-solid border-2">
+                    17:15 - <small>19:00</small>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="panel_1808348400" class="panel-1 whatson_panel tab-content divide-y hidden">
+      <div class="grid grid-cols-none md:grid-cols-2 gap-4 py-3">
+        <div class="py-4 px-4 md:p-4 bg-white dark:bg-gray-700 grid-container-border">
+          <div class="grid grid-cols-3 grid-rows-auto grid-flow-col gap-4 place-content-start">
+            <div class="row-start-1 col-span-2">
+              <div class="flex flex-row justify-between items-center  title_min-height">
+                <h2 class="text-accent dark:text-white title_line-clamp">
+                  <a href="/event/1003">RBO 2026-27: The Royal Ballet – An Example Ballet</a>
+                </h2>
+                <img class="object-scale-down h-6 w-6" src="/ratings/UK/TBCsml.gif" alt="TBC">
+              </div>
+            </div>
+            <div class="row-start-2 col-start-1 col-span-3 row-span-1 md:row-start-auto md:col-start-auto">
+              <div class="grid grid-cols-1 gap-x-2 gap-y-3">
+                <a class="block btn-perf font-body text-center  perfButton content-center align-middle" href="https://high-street.example-tickets.co.uk/tickets/?perfCode=5005" style="display:inherit;">
+                  <span class=" text-black bg-gray-100 border-primary border-solid border-2">
+                    <img style="height:11px;vertical-align:inherit;" class="inline-block" style="" src="../assets/perftypeIcons/example_perf-icon-set_events.svg" alt="Example Events icon">                    </span>
+                  <span class="px-3 py-3 lg:py-1 border-primary border-solid border-2">
+                    19:15 - <small>22:00</small>
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="bg-white dark:bg-gray-700 showTimeKey">
+  <div id="panels" class="container mx-auto py-4 md:px-4">
+    <div class="font-display font-bold text-lg pl-4">SYMBOL KEY</div>
+    <div class="inline-block px-4 text-accent dark:text-white"><p class="text-accent dark:text-white inline-block">Subtitled&nbsp;&nbsp;&nbsp;</p><span class="inline-block"><img style="height:20px;" class="inline-block pr-2" src="../assets/perftypeIcons/example_perf-icon-set_subtitled.svg" alt=" icon"></span></div>
+  </div>
+</div>
+</body>
+</html>

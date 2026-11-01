@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.7.0] - 2026-11-01
+### Added
+- `cinebase/a1web`, loaded only on request, for chains whose websites run on Admit One's A1Web, such as Arc, Reel and Movie House
+- `A1web::Client` reads venues from the website's cinema menu and site codes from `GlobalSiteData`, or from a venue's own page when the home page lists none. It reads a venue's `/whatson` page, which holds every advertised date, as UTF-8 although A1Web sends Windows-1252. It retries dropped connections.
+- `A1web::Listings` reads each showtime's date, start, absolute booking link and tags (icon names, `a1-event-*` icon classes and group headings). It handles date panels keyed by timestamp, tabs carrying a timestamp, and tabs with only a label such as `Tue 03 Nov`, reads repeated mobile copies once, and adds the venue path that Movie House booking links leave out.
+- `A1web::Cinema` and `A1web::Performance` base classes. A chain defines `Cinema.website` and `#brand`, optionally `Cinema.locations` with addresses and coordinates, and `Performance.cinema_class`, `.title_sanitizer` and optionally `.variants`. 3D and IMAX also come from titles.
+
 ## [5.6.0] - 2026-10-31
 ### Added
 - `Cinema#latitude` and `Cinema#longitude`, `nil` by default. Chain gems return Floats in decimal degrees when they know where a cinema is.

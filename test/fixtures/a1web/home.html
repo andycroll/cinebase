@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="EN" class="">
+<head>
+  <meta charset="UTF-8" />
+  <meta data-a1serv="A1Web-FE1" />
+  <script>
+  var sitecode = 'EXAMPLE';
+  </script>
+</head>
+<body>
+  <script>
+  var GlobalSiteData = [];
+GlobalSiteData['https://high-street.example-cinema.co.uk'] = 'EX_HIGH';GlobalSiteData['https://riverside.example-cinema.co.uk'] = 'EX_RIVE';GlobalSiteData['https://test.example-cinema.co.uk'] = 'EX_TEST';</script>
+<header id="a1web-header">
+  <select class="cinemaSelect" id="cinemaSelect" onchange="cinemaSelect()">
+    <option value="https://high-street.example-cinema.co.uk" >High Street</option>
+    <option value="https://riverside.example-cinema.co.uk/" >Riverside &amp; Quay </option>
+    <option value="https://new-town.example-cinema.co.uk" >New Town</option>
+  </select>
+</header>
+<div id="cinemaSelectModal">
+  <select>
+    <option id="disabled_input" value="" selected="true" disabled="disabled">Select a Cinema</option>
+    <option value="https://high-street.example-cinema.co.uk" >High Street</option>
+    <option value="https://riverside.example-cinema.co.uk/" >Riverside &amp; Quay </option>
+    <option value="https://new-town.example-cinema.co.uk" >New Town</option>
+  </select>
+</div>
+<script>
+  $('#quickBook').append('<option value="' + option + '">' + option + '</option>');
+</script>
+</body>
+</html>

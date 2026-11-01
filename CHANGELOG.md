@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [5.7.0] - 2026-11-01
 ### Added
 - `cinebase/a1web`, loaded only on request, for chains whose websites run on Admit One's A1Web, such as Arc, Reel and Movie House
 - `A1web::Client` reads venues from the website's cinema menu and site codes from `GlobalSiteData`, or from a venue's own page when the home page lists none. It reads a venue's `/whatson` page, which holds every advertised date, as UTF-8 although A1Web sends Windows-1252. It retries dropped connections.

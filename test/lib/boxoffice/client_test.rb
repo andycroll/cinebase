@@ -86,19 +86,15 @@ class BoxofficeClientTest < Minitest::Test
 
   def test_retries_dropped_connections
     stub_request(:get, "#{API}/movies?ids=1").to_raise(OpenSSL::SSL::SSLError).then.to_return(status: 200, body: '[]')
-    api = client
-    api.define_singleton_method(:sleep) { |_seconds| nil }
-
-    assert_equal [], api.movies(['1'])
+    assert_equal [], Cinebase::Http.stub(:pause, nil) { client.movies(['1']) }
   end
 
   def test_gives_up_after_repeated_drops
     stub_request(:get, "#{API}/movies?ids=1").to_raise(EOFError)
-    api = client
-    api.define_singleton_method(:sleep) { |_seconds| nil }
-
-    assert_raises(EOFError) { api.movies(['1']) }
-    assert_requested :get, "#{API}/movies?ids=1", times: Cinebase::Boxoffice::Client::RETRIES + 1
+    Cinebase::Http.stub(:pause, nil) do
+      assert_raises(EOFError) { client.movies(['1']) }
+    end
+    assert_requested :get, "#{API}/movies?ids=1", times: Cinebase::Http::RETRIES + 1
   end
 
   def test_errors_omit_body

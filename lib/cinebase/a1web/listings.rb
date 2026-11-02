@@ -96,12 +96,12 @@ module Cinebase
       end
 
       def local_date(timestamp)
-        TZInfo::Timezone.get(TIME_ZONE).to_local(Time.at(timestamp).utc).to_date
+        London.date(Time.at(timestamp))
       end
 
       def starting_at(date, time)
         local = Time.utc(date.year, date.month, date.day, time[1].to_i, time[2].to_i)
-        TZInfo::Timezone.get(TIME_ZONE).local_to_utc(local) { |periods| periods.first }.utc
+        London.utc(local)
       end
 
       # Movie House links leave out the venue's path, and only work with it

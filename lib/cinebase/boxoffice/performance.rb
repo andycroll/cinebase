@@ -28,7 +28,7 @@ module Cinebase
       # @return [Array<Cinebase::Boxoffice::Performance>] instances of the subclass
       def self.at(
         cinema_id,
-        from: TZInfo::Timezone.get('Europe/London').now.to_date,
+        from: London.today,
         to: from + 13
       )
         raise ArgumentError, 'to must not precede from' if to < from

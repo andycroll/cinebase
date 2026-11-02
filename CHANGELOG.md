@@ -2,7 +2,7 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
-## [Unreleased]
+## [5.8.0] - 2026-11-02
 ### Added
 - `Cinebase::Http` for chain gems' requests: `get`, and `post` with a form or JSON body, over HTTPS. It retries dropped connections twice, never follows redirects, raises errors that name the status and host but leave out the body, and returns bodies as UTF-8. `keep_alive: true` reuses one connection per host until `close`. Tests stub `Cinebase::Http.pause` to skip the waits between attempts.
 - `Cinebase::London` for London dates and times: `today`, `utc` for a listed wall-clock time (the hour repeated when clocks go back is read as BST) and `date` for a time's London date.

@@ -47,7 +47,7 @@ module Cinebase
       # @return [Array<Cinebase::A1web::Performance>] instances of the subclass
       def self.at(
         cinema_id,
-        from: TZInfo::Timezone.get(TIME_ZONE).now.to_date,
+        from: London.today,
         to: from + 13
       )
         raise ArgumentError, 'to must not precede from' if to < from
@@ -56,7 +56,7 @@ module Cinebase
         if cinema.url.empty?
           []
         else
-          today = TZInfo::Timezone.get(TIME_ZONE).now.to_date
+          today = London.today
           html = cinema_class.client.whats_on(cinema.url)
           showings = Listings.new(html, venue_url: cinema.url, today: today).showings
           performances = showings.select { |showing| (from..to).cover?(showing.date) }.map do |showing|

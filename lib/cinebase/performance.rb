@@ -35,7 +35,7 @@ module Cinebase
         if @time.utc?
           @time
         else
-          TZInfo::Timezone.get('Europe/London').local_to_utc(@time)
+          London.utc(@time)
         end
     end
 

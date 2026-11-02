@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'json'
-require 'net/http'
 
 module Cinebase
   module Boxoffice
@@ -16,16 +15,13 @@ module Cinebase
       MOVIES_PER_REQUEST = 50
       # Listings days run from 3am to 3am, like the website's
       DAY_STARTS_AT = 'T03:00:00'
-      RETRIES = 2
-      TRANSIENT_ERRORS = [
-        EOFError, Errno::ECONNRESET, Errno::ECONNREFUSED, Net::OpenTimeout, Net::ReadTimeout, OpenSSL::SSL::SSLError
-      ].freeze
 
       attr_reader :base_url
 
       # @param [String] base_url the chain website, e.g. 'https://www.everymancinema.com'
       def initialize(base_url:)
         @base_url = base_url.delete_suffix('/')
+        @http = Http.new
       end
 
       # @return [Array<Hash>] every theatre in the website's daily build
@@ -77,25 +73,7 @@ module Cinebase
       end
 
       def get(url, accept:)
-        uri = URI(url)
-        request = Net::HTTP::Get.new(uri)
-        request['Accept'] = accept
-        attempts = 0
-        begin
-          response = Net::HTTP.start(uri.host, uri.port, use_ssl: true, open_timeout: 10, read_timeout: 30) do |http|
-            http.request(request)
-          end
-        rescue *TRANSIENT_ERRORS
-          attempts += 1
-          raise if attempts > RETRIES
-
-          sleep(attempts)
-          retry
-        end
-        # Omit response bodies from errors, and never follow redirects.
-        raise "HTTP error #{response.code} from #{uri.host}" unless response.is_a?(Net::HTTPSuccess)
-
-        response.body
+        @http.get(url, headers: { 'Accept' => accept })
       end
     end
   end

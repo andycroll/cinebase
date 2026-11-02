@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'cgi/escape'
-require 'net/http'
 
 module Cinebase
   module A1web
@@ -14,16 +13,13 @@ module Cinebase
       SITE_CODE = /var sitecode\s*=\s*'([^']+)'/
       # Pages claim ISO-8859-1 but send Windows-1252 dashes and quotes
       LEGACY_ENCODING = Encoding::Windows_1252
-      RETRIES = 2
-      TRANSIENT_ERRORS = [
-        EOFError, Errno::ECONNRESET, Errno::ECONNREFUSED, Net::OpenTimeout, Net::ReadTimeout, OpenSSL::SSL::SSLError
-      ].freeze
 
       attr_reader :base_url
 
       # @param [String] base_url the chain website, e.g. 'https://www.arccinema.co.uk'
       def initialize(base_url:)
         @base_url = base_url.delete_suffix('/')
+        @http = Http.new
       end
 
       # Venues in the home page's cinema menu, with the site codes the home
@@ -52,29 +48,12 @@ module Cinebase
       private
 
       def get(url)
-        uri = URI(url)
-        attempts = 0
-        begin
-          response = Net::HTTP.start(uri.host, uri.port, use_ssl: true, open_timeout: 10, read_timeout: 30) do |http|
-            http.request(Net::HTTP::Get.new(uri))
-          end
-        rescue *TRANSIENT_ERRORS
-          attempts += 1
-          raise if attempts > RETRIES
-
-          sleep(attempts)
-          retry
-        end
-        # Omit response bodies from errors, and never follow redirects.
-        raise "HTTP error #{response.code} from #{uri.host}" unless response.is_a?(Net::HTTPSuccess)
-
-        decode(response.body)
+        decode(@http.get(url))
       end
 
       def decode(body)
-        utf8 = body.dup.force_encoding(Encoding::UTF_8)
-        if utf8.valid_encoding?
-          utf8
+        if body.valid_encoding?
+          body
         else
           body.dup.force_encoding(LEGACY_ENCODING).encode(Encoding::UTF_8, invalid: :replace, undef: :replace)
         end

@@ -20,6 +20,7 @@ Gem::Specification.new do |spec|
 
   spec.add_development_dependency 'base64'
   spec.add_development_dependency 'bundler', '>= 2.0'
+  spec.add_development_dependency 'minitest-mock'
   spec.add_development_dependency 'minitest-reporters'
   spec.add_development_dependency 'rake', '>= 13.0'
   spec.add_development_dependency 'simplecov', '~> 0.22'

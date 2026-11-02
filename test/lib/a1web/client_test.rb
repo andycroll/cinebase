@@ -42,17 +42,17 @@ class A1webClientTest < Minitest::Test
 
   def test_retries_dropped_connections
     stub_request(:get, "#{VENUE}/whatson").to_raise(EOFError).then.to_return(status: 200, body: 'ok')
-    client.define_singleton_method(:sleep) { |_seconds| nil }
 
-    assert_equal 'ok', client.whats_on(VENUE)
+    assert_equal 'ok', Cinebase::Http.stub(:pause, nil) { client.whats_on(VENUE) }
   end
 
   def test_gives_up_after_retries
     stub_request(:get, "#{VENUE}/whatson").to_raise(Errno::ECONNRESET)
-    client.define_singleton_method(:sleep) { |_seconds| nil }
 
-    assert_raises(Errno::ECONNRESET) { client.whats_on(VENUE) }
-    assert_requested :get, "#{VENUE}/whatson", times: Cinebase::A1web::Client::RETRIES + 1
+    Cinebase::Http.stub(:pause, nil) do
+      assert_raises(Errno::ECONNRESET) { client.whats_on(VENUE) }
+    end
+    assert_requested :get, "#{VENUE}/whatson", times: Cinebase::Http::RETRIES + 1
   end
 
   def test_raises_on_http_errors_without_the_body

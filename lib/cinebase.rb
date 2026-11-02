@@ -7,5 +7,7 @@ require 'cinebase/version'
 
 require 'cinebase/cinema'
 require 'cinebase/festival'
+require 'cinebase/http'
+require 'cinebase/london'
 require 'cinebase/performance'
 require 'cinebase/title_sanitizer'

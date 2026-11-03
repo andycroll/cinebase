@@ -2,6 +2,13 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.9.2] - 2026-11-03
+### Changed
+- Festivals take their full name, so chains agree: `CFF` is Cambridge Film Festival, `FFF` and `French Film Fest UK` are French Film Festival, `IFF` is Into Film Festival, `JFF` and `UKJFF` are UK Jewish Film Festival, `LPFF` is London Palestine Film Festival, `RFF` is Romanian Film Festival and `SLA` is Scotland Loves Anime.
+
+### Added
+- A `See It First –` prefix marks a preview.
+
 ## [5.9.1] - 2026-11-03
 ### Fixed
 - Titles with non-breaking spaces now match the common rules and audience labels.

@@ -77,7 +77,7 @@ class BoxofficePerformanceTest < Minitest::Test
   def test_at_moves_festival_and_language_from_title
     performance = find('Mystery Matinee')
 
-    assert_equal Cinebase::Festival.new(name: 'CFF', year: 2026), performance.festival
+    assert_equal Cinebase::Festival.new(name: 'Cambridge Film Festival', year: 2026), performance.festival
     assert_equal 'Tamil', performance.language
     assert_equal %w(baby), performance.variant
   end

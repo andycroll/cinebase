@@ -12,7 +12,7 @@ module Cinebase
       'dog_friendly' => [/\ADog-Friendly Screening\s*:\s*/i],
       'baby' => [/\s*\(Parent (?:&|and) Baby(?: Only Show)?\)/i],
       'members' => [/#{SEPARATOR}(?:Unlimited|MyOmnipass Member) Screening\z/i],
-      'preview' => [/\s*[-–]\s*(?:Special )?Preview\z/i]
+      'preview' => [/\s*[-–]\s*(?:Special )?Preview\z/i, /\ASee It First\s*[-–:]\s*/i]
     }.freeze
 
     PATTERNS = LABELS.values.flatten.freeze

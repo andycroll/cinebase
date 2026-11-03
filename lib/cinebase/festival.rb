@@ -11,6 +11,19 @@ module Cinebase
       'Women and the World Festival'
     ].freeze
 
+    # Full names for short forms, so every chain names a festival alike
+    FULL_NAMES = {
+      'CFF' => 'Cambridge Film Festival',
+      'FFF' => 'French Film Festival',
+      'French Film Fest UK' => 'French Film Festival',
+      'IFF' => 'Into Film Festival',
+      'JFF' => 'UK Jewish Film Festival',
+      'LPFF' => 'London Palestine Film Festival',
+      'RFF' => 'Romanian Film Festival',
+      'SLA' => 'Scotland Loves Anime',
+      'UKJFF' => 'UK Jewish Film Festival'
+    }.freeze
+
     # Title prefixes naming a festival: the name, then the year when given
     PREFIXES = [
       /\A(Cine-Excess) (20\d{2}): /,
@@ -28,7 +41,7 @@ module Cinebase
     def self.from_title(title, year:)
       PREFIXES.each do |prefix|
         match = title.match(prefix)
-        return new(name: match[1], year: edition(match[2]) || year) if match
+        return new(name: FULL_NAMES.fetch(match[1], match[1]), year: edition(match[2]) || year) if match
       end
       nil
     end

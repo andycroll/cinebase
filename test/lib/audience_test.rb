@@ -16,7 +16,8 @@ class AudienceTest < Minitest::Test
       'Wicked Unlimited Screening' => %w(members),
       'Wicked - MyOmnipass Member Screening' => %w(members),
       'Wicked - Preview' => %w(preview),
-      'Wicked - SPECIAL PREVIEW' => %w(preview)
+      'Wicked - SPECIAL PREVIEW' => %w(preview),
+      'See It First – Dune: Part Three' => %w(preview)
     }.each do |title, variants|
       assert_equal(variants, Cinebase::Audience.variants(title), title)
     end

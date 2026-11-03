@@ -141,6 +141,7 @@ class TitleSanitizerTest < Minitest::Test
     assert_common_sanitized('Wicked', 'Wicked (Parent & Baby Only Show)')
     assert_common_sanitized('Wicked', 'Wicked - MyOmnipass Member Screening')
     assert_common_sanitized('Wicked', 'Wicked - SPECIAL PREVIEW')
+    assert_common_sanitized('Dune: Part Three', 'See It First – Dune: Part Three')
     assert_common_sanitized('The Wedding Entertainer', 'Centrepiece Gala: The Wedding Entertainer')
     assert_common_sanitized('Mediterranean Fever', 'Mediterranean Fever + ScreenTalk')
     assert_common_sanitized('Hamnet', 'Hamnet + Intro')

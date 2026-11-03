@@ -9,6 +9,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - A `See It First –` prefix marks a preview.
 
+### Fixed
+- Titles in capitals with `WORLD TOUR` are title cased throughout, not just the words `World Tour`.
+
 ## [5.9.1] - 2026-11-03
 ### Fixed
 - Titles with non-breaking spaces now match the common rules and audience labels.

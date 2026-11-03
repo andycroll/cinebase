@@ -87,8 +87,7 @@ module Cinebase
         'Royal Ballet and Opera: ',
       /\A(?:NT (?:Live|Encore)(?: Encore)?|NTL|National Theatre(?: Live)?)#{ARTS_SEPARATOR}(.*)/i => 'National Theatre Live: ',
       /\AExhibition on Screen#{ARTS_SEPARATOR}(.*)/i => 'Exhibition on Screen: ',
-      /\ABolshoi(?: Ballet)?#{ARTS_SEPARATOR}(.*)/i => 'Bolshoi Ballet: ',
-      /WORLD TOUR(.*)/ => 'World Tour'
+      /\ABolshoi(?: Ballet)?#{ARTS_SEPARATOR}(.*)/i => 'Bolshoi Ballet: '
     }.freeze
 
     SMALL_WORDS = %w(a an and as at but by for from in into nor of on or the to v vs with).freeze

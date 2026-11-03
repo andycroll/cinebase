@@ -219,7 +219,8 @@ class TitleSanitizerTest < Minitest::Test
   end
 
   def test_common_rules_decapitalise_world_tour
-    assert_common_sanitized("ENHYPEN World Tour 'BLOOD SAGA'", "ENHYPEN WORLD TOUR 'BLOOD SAGA'")
+    assert_common_sanitized("Enhypen World Tour 'Blood Saga'", "ENHYPEN WORLD TOUR 'BLOOD SAGA'")
+    assert_common_sanitized("BTS World Tour 'Arirang' in Jakarta: Live Viewing", "BTS WORLD TOUR 'ARIRANG' IN JAKARTA: LIVE VIEWING")
   end
 
   def test_common_rules_remove_film_year

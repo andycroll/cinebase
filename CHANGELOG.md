@@ -2,6 +2,19 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.9.0] - 2026-11-03
+### Added
+- `Cinebase::Event` for opera, ballet, theatre and exhibition screenings. `Performance#event` names the series from the `film_name` prefix the title sanitizer gives, such as `Met Opera: `, and `Performance#film_name` leaves it out.
+- `Cinebase::Audience` reads relaxed, kids, baby, dog-friendly, members and preview labels from a raw title.
+- `Performance` takes the raw `title:`. With it, `#variant` adds audience variants and `#festival` falls back to one named in the title.
+- Festival prefixes for Cinecity, FFF, French Film Fest UK, IFF, Into Film Festival, JFF, LDNDOCS, London Palestine Film Festival, LPFF, NFF, Queer East, RFF, SLA and Women and the World Festival, with or without a year, which may have two digits.
+- Bengali, Gujarati, Japanese, Romanian and Vietnamese language versions.
+
+### Changed
+- `COMMON_REPLACE` names every spelling of a Met Opera, Royal Ballet and Opera, National Theatre Live, Exhibition on Screen or Bolshoi season with one prefix, including Met operas listed in an RBO season.
+- `COMMON_REMOVE` also strips audience labels, festival gala labels, bracketed 3D and 4K, `4K Restoration`, restorations after an anniversary, square-bracketed anniversaries, bracketed encores, `(Recorded)`, `(English Dubbed)`, `- Live On Stage`, and `+ ScreenTalk`, `+ Intro` and `+ Short Film` add-ons.
+- Titles listed in capitals are title cased.
+
 ## [5.8.0] - 2026-11-02
 ### Added
 - `Cinebase::Http` for chain gems' requests: `get`, and `post` with a form or JSON body, over HTTPS. It retries dropped connections twice, never follows redirects, raises errors that name the status and host but leave out the body, and returns bodies as UTF-8. `keep_alive: true` reuses one connection per host until `close`. Tests stub `Cinebase::Http.pause` to skip the waits between attempts.

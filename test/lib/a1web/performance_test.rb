@@ -82,7 +82,7 @@ class A1webPerformanceTest < Minitest::Test
   def test_3d_from_the_icon_with_the_title_sanitized
     performance = performances_at('EX_HIGH').find { |p| p.dimension == '3d' }
 
-    assert_equal 'THE EXAMPLE SEQUEL', performance.film_name
+    assert_equal 'The Example Sequel', performance.film_name
   end
 
   def test_3d_and_imax_from_the_title
@@ -106,7 +106,8 @@ class A1webPerformanceTest < Minitest::Test
   def test_shared_titles_are_standardised
     performance = performances_at('EX_HIGH').last
 
-    assert_equal 'Royal Ballet and Opera: The Royal Ballet – An Example Ballet', performance.film_name
+    assert_equal 'An Example Ballet', performance.film_name
+    assert_equal Cinebase::Event.new(name: 'Royal Ballet and Opera'), performance.event
   end
 
   def test_headings_map_to_variants

@@ -76,6 +76,7 @@ module Cinebase
           film_year: TitleSanitizer.film_year(title),
           language: title[LANGUAGE, 1],
           starting_at: showing.starting_at,
+          title: title,
           variant: variant(showing)
         }
       end

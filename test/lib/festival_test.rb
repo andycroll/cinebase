@@ -36,3 +36,34 @@ class FestivalTest < Minitest::Test
     refute_equal(editions.first, editions.last)
   end
 end
+
+class FestivalPrefixesTest < Minitest::Test
+  def test_from_title_with_known_festivals_and_any_year
+    {
+      'Cinecity 2026: Hamnet' => ['Cinecity', 2026],
+      'Cinecity 2027: Hamnet' => ['Cinecity', 2027],
+      'NFF 2026: Hamnet' => ['NFF', 2026],
+      'SLA 2026: A Silent Voice' => ['SLA', 2026],
+      'UKJFF 2026: Hamnet' => ['UKJFF', 2026],
+      'UKJFF: Hamnet' => ['UKJFF', 2025],
+      'IFF 2026: The Sheep Detectives' => ['IFF', 2026],
+      'JFF 2026 : Tell Me Everything' => ['JFF', 2026],
+      'LDNDOCS 2026: Hamnet' => ['LDNDOCS', 2026],
+      'LPFF 2026: Hamnet' => ['LPFF', 2026],
+      'London Palestine Film Festival: Hamnet' => ['London Palestine Film Festival', 2025],
+      'RFF 2026: 12:08 East of Bucharest' => ['RFF', 2026],
+      'Queer East 26: A Useful Ghost' => ['Queer East', 2026],
+      'Into Film Festival: Flow' => ['Into Film Festival', 2025],
+      'French Film Fest UK: Hamnet' => ['French Film Fest UK', 2025],
+      'Women and the World Festival: Hamnet' => ['Women and the World Festival', 2025],
+      'FFF: A Man of His Time' => ['FFF', 2025]
+    }.each do |title, (name, year)|
+      assert_equal(Cinebase::Festival.new(name: name, year: year), Cinebase::Festival.from_title(title, year: 2025), title)
+    end
+  end
+
+  def test_from_title_needs_the_festival_name_before_a_separator
+    assert_nil(Cinebase::Festival.from_title('Cinecityscapes', year: 2026))
+    assert_nil(Cinebase::Festival.from_title('IFFY: The Movie', year: 2026))
+  end
+end

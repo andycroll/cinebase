@@ -62,6 +62,7 @@ module Cinebase
           film_year: TitleSanitizer.film_year(title),
           language: showtime.language || title[/\((#{TitleSanitizer::LANGUAGES.join('|')})\)/i, 1],
           starting_at: starting_at,
+          title: title,
           variant: showtime.variant
         }
       end

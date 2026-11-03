@@ -70,11 +70,11 @@ class TitleSanitizerTest < Minitest::Test
   end
 
   def test_common_rules_remove_anniversary
-    assert_common_sanitized('SCREAM', 'SCREAM (30th Anniversary)')
+    assert_common_sanitized('Scream', 'SCREAM (30th Anniversary)')
   end
 
   def test_common_rules_remove_q_and_a
-    assert_common_sanitized('NAZA', 'NAZA + Q&A')
+    assert_common_sanitized('Naza', 'NAZA + Q&A')
     assert_common_sanitized("Charlie Shaw's Revenge", "Charlie Shaw's Revenge + In-Person Q&A")
   end
 
@@ -106,11 +106,92 @@ class TitleSanitizerTest < Minitest::Test
     assert_common_sanitized('Fast & Furious 7', 'Fast &amp; Furious 7')
   end
 
-  def test_common_rules_standardise_arts_seasons
-    assert_common_sanitized('Met Opera: Tosca', 'Met Opera 2026-27: Tosca')
-    assert_common_sanitized('Met Opera: Macbeth', 'Met Opera Encore 2026-27: Macbeth')
-    assert_common_sanitized('Royal Ballet and Opera: Manon', 'RBO Cinema Season 2026-27: Manon')
-    assert_common_sanitized('Royal Ballet and Opera: Alice', 'RBO 2026-27: Alice')
+  def test_common_rules_name_arts_series_as_events_expect_them
+    {
+      'Met Opera: Tosca' => ['Met Opera 2026-27: Tosca', 'MET Opera 2026-27: Tosca', 'Met Opera Live 2026-27: Tosca',
+                             'Met Opera Encore 2026-27: Tosca', 'Met. Encore: Tosca', 'RBO 2026-27: The Met Opera – Tosca',
+                             'RBO 2026-27: MET Opera - Tosca'],
+      'Royal Ballet and Opera: Tosca' => ['RBO: Tosca', 'RBO 2026-27: Tosca', 'RBO 26-27: Tosca', 'RBO 2026/27: Tosca',
+                                          'RBO Live 2026-27: Tosca', 'RBO Encore2026-27:Tosca', 'RBO Cinema Season 26-27: Tosca',
+                                          'The Royal Opera: Tosca', 'RBO 2026-27: The Royal Opera – Tosca',
+                                          'Royal Ballet and Opera: Tosca', 'Royal Ballet & Opera: Tosca'],
+      'National Theatre Live: Hay Fever' => ['NT Live: Hay Fever', 'NT Encore: Hay Fever', 'NT Live/ Hay Fever', 'NTL: Hay Fever',
+                                             'National Theatre Live: Hay Fever', 'NATIONAL THEATRE LIVE: Hay Fever'],
+      'Exhibition on Screen: Monet' => ['EXHIBITION ON SCREEN: Monet', 'Exhibition On Screen: Monet'],
+      'Bolshoi Ballet: Giselle' => ['Bolshoi - Giselle']
+    }.each do |expected, titles|
+      titles.each { |title| assert_common_sanitized(expected, title) }
+    end
+  end
+
+  def test_common_rules_keep_titles_near_arts_series_names
+    ['Metropolis', 'The Royal Tenenbaums', 'Royal Opera House: Behind the Curtain'].each do |title|
+      assert_common_sanitized(title, title)
+    end
+  end
+
+  def test_shows_in_capitals_are_title_cased_after_the_series
+    assert_common_sanitized('Royal Ballet and Opera: Swan Lake', 'Royal Ballet and Opera: SWAN LAKE')
+  end
+
+  def test_common_rules_remove_audience_labels
+    assert_common_sanitized('The Polar Express', 'Toddler Club: The Polar Express')
+    assert_common_sanitized('Wicked', 'Wicked - Sensory Friendly Screening')
+    assert_common_sanitized('Wicked', 'Dog-Friendly Screening: Wicked')
+    assert_common_sanitized('Wicked', 'Wicked (Parent & Baby Only Show)')
+    assert_common_sanitized('Wicked', 'Wicked - MyOmnipass Member Screening')
+    assert_common_sanitized('Wicked', 'Wicked - SPECIAL PREVIEW')
+    assert_common_sanitized('The Wedding Entertainer', 'Centrepiece Gala: The Wedding Entertainer')
+    assert_common_sanitized('Mediterranean Fever', 'Mediterranean Fever + ScreenTalk')
+    assert_common_sanitized('Hamnet', 'Hamnet + Intro')
+  end
+
+  def test_common_rules_remove_bracketed_formats_and_editions
+    assert_common_sanitized('Avatar', 'Avatar (3D)')
+    assert_common_sanitized('The Devils', 'The Devils (4K Restoration)')
+    assert_common_sanitized('Alien', 'Alien (4K)')
+    assert_common_sanitized('Alien', 'Alien 4k')
+    assert_common_sanitized('Jaws', 'Jaws (50th Anniversary 4K Restoration)')
+    assert_common_sanitized('Jaws', 'Jaws (20th Anniversary Restoration)')
+    assert_common_sanitized('Loveless', 'Loveless [10th Anniversary]')
+    assert_common_sanitized('Tosca', 'Tosca (Encore)')
+    assert_common_sanitized('Tosca', 'Tosca (2025 Encore)')
+    assert_common_sanitized('Tosca', 'Tosca (Recorded)')
+    assert_common_sanitized('Thunderbirds Double Bill', 'Thunderbirds 4k Restoration Double Bill')
+    assert_common_sanitized('Spirited Away', 'Spirited Away (English Dubbed)')
+  end
+
+  def test_common_rules_remove_more_language_versions
+    %w(Bengali Gujarati Japanese Romanian Vietnamese).each do |language|
+      assert_common_sanitized('Chatni', "Chatni (#{language})")
+    end
+  end
+
+  def test_common_rules_remove_live_on_stage
+    assert_common_sanitized("Andrew Lloyd Webber's Starlight Express", "Andrew Lloyd Webber's Starlight Express - Live On Stage")
+  end
+
+  def test_common_rules_remove_more_festival_prefixes
+    assert_common_sanitized('A Silent Voice', 'SLA 2026: A Silent Voice')
+    assert_common_sanitized('Tell Me Everything', 'JFF 2026 : Tell Me Everything')
+    assert_common_sanitized('A Useful Ghost', 'Queer East 26: A Useful Ghost')
+  end
+
+  def test_titles_in_capitals_are_title_cased
+    assert_common_sanitized('The Lord of the Rings: The Return of the King', 'THE LORD OF THE RINGS: THE RETURN OF THE KING')
+    assert_common_sanitized("Spider-Man: Don't Look Back", "SPIDER-MAN: DON'T LOOK BACK")
+    assert_common_sanitized('Götterdämmerung', 'GÖTTERDÄMMERUNG')
+    assert_common_sanitized('Rocky IV', 'ROCKY IV')
+    assert_common_sanitized('Rocky V', 'ROCKY V')
+    assert_common_sanitized('Derek vs Derek', 'DEREK VS DEREK')
+    assert_common_sanitized('M3GAN 2.0', 'M3GAN 2.0')
+    assert_common_sanitized('RRR', 'RRR')
+    assert_common_sanitized("BTS 'Arirang' in Buenos Aires: Live Viewing", "BTS 'ARIRANG' IN BUENOS AIRES: LIVE VIEWING")
+    assert_common_sanitized('Mr. Bean', 'MR. BEAN')
+  end
+
+  def test_titles_with_lowercase_keep_their_case
+    assert_common_sanitized('JAK ZYC with friends', 'JAK ZYC with friends')
   end
 
   def test_common_rules_decapitalise_world_tour
@@ -160,7 +241,7 @@ class TitleSanitizerTest < Minitest::Test
       'Hadestown: The Musical',
       'Rammstein - Live in Mexico City',
       'Ozzy & Black Sabbath: Back to the Beginning',
-      "BTS 'ARIRANG' IN BUENOS AIRES: LIVE VIEWING",
+      "BTS 'Arirang' at Wembley: Live Viewing",
       '3 Days to Kill',
       'Blade Runner 2049',
       '2001: A Space Odyssey',

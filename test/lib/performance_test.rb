@@ -287,9 +287,44 @@ class PerformanceTest < Minitest::Test
     assert(Cinebase::Performance.new(options).subtitled?)
   end
 
+  def test_abstract_class_series_prefix_makes_an_arts_event
+    options = { cinema_id: 123, cinema_name: 'Cinema', film_name: 'Royal Ballet and Opera: Tosca', starting_at: Time.now }
+    performance = Cinebase::Performance.new(options)
+    assert_equal('Tosca', performance.film_name)
+    assert_equal(Cinebase::Event.new(name: 'Royal Ballet and Opera'), performance.event)
+    assert_equal(%w(arts), performance.variant)
+  end
+
+  def test_abstract_class_event_for_a_film_is_nil
+    options = { cinema_id: 123, cinema_name: 'Cinema', film_name: 'Film Name', starting_at: Time.now }
+    assert_nil(Cinebase::Performance.new(options).event)
+  end
+
+  def test_abstract_class_title_adds_audience_variants
+    performance = Cinebase::Performance.new(titled_options('Relaxed Screening: Wicked').merge(variant: %w(subtitled)))
+    assert_equal(%w(relaxed subtitled), performance.variant)
+  end
+
+  def test_abstract_class_title_finds_a_festival_in_the_screening_year
+    performance = Cinebase::Performance.new(titled_options('UKJFF: Hamnet'))
+    assert_equal(Cinebase::Festival.new(name: 'UKJFF', year: 2026), performance.festival)
+  end
+
+  def test_abstract_class_given_festival_wins_over_title
+    festival = Cinebase::Festival.new(name: 'Cine-Excess', year: 2026)
+    performance = Cinebase::Performance.new(titled_options('UKJFF: Hamnet').merge(festival: festival))
+    assert_equal(festival, performance.festival)
+  end
+
   # Tests for implemented subclass
 
   def test_subclass_at_returns_cinema_id
     assert_equal(123, TestPerformance.at(123))
+  end
+
+  private
+
+  def titled_options(title)
+    { cinema_id: 123, cinema_name: 'Cinema', film_name: 'Film Name', starting_at: Time.utc(2026, 11, 3, 19, 30), title: title }
   end
 end

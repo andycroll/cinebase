@@ -53,7 +53,8 @@ module CinemaChainName
     def self.at(cinema_id)
       # parse webpages or apis to get performances for a cinema, built with
       # booking_url:, cinema_id:, cinema_name:, dimension:, festival:,
-      # film_name:, film_year:, language:, starting_at: and variant:
+      # film_name:, film_year:, language:, starting_at:, title: (the raw
+      # title) and variant:
     end
   end
 end
@@ -92,6 +93,38 @@ Cinebase::Festival.from_title('UKJFF - From Cable Street To Brick Lane', year: 2
 ```
 
 `COMMON_REMOVE` strips the same prefixes from titles.
+
+### Stage shows
+
+The common rules name opera, ballet, theatre and exhibition screenings with
+one prefix per series, such as `Met Opera: Tosca`. A performance strips it
+from `film_name` and names the series as its `event`, with an `arts` variant:
+
+```ruby
+performance = CinemaChainName::Performance.new(film_name: 'Met Opera: Tosca', ...)
+performance.film_name #=> "Tosca"
+performance.event     #=> #<data Cinebase::Event name="Met Opera">
+```
+
+A chain's own `replace` rules should produce the same prefixes.
+
+### Audiences
+
+Some chains name relaxed, toddler, parent and baby, dog-friendly, members'
+or preview screenings in the title. `COMMON_REMOVE` strips the label, and a
+performance given `title:` adds the variant:
+
+```ruby
+Cinebase::Audience.variants('Relaxed Screening: Wicked') #=> ["relaxed"]
+```
+
+A performance given `title:` also finds its festival when not given one.
+
+### Titles in capitals
+
+A title listed in capitals is title cased, keeping acronyms without vowels,
+Roman numerals and words with digits: `ROCKY IV` reads `Rocky IV`, and
+`BTS 'ARIRANG'` reads `BTS 'Arirang'`.
 
 ### Film years
 

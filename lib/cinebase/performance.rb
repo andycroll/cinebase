@@ -7,10 +7,9 @@ module Cinebase
     attr_reader :dimension
     attr_reader :cinema_id
     attr_reader :cinema_name
-    attr_reader :festival
-    attr_reader :film_name
     attr_reader :film_year
     attr_reader :language
+    attr_reader :title
 
     def initialize(options)
       @booking_url = options.fetch(:booking_url, nil)
@@ -22,6 +21,7 @@ module Cinebase
       @film_year   = options.fetch(:film_year, nil)
       @language    = options.fetch(:language, nil)
       @time        = options.fetch(:starting_at)
+      @title       = options.fetch(:title, nil)
       @variant     = options.fetch(:variant, [])
     end
 
@@ -43,14 +43,36 @@ module Cinebase
       starting_at.to_date
     end
 
+    # Given, or named by the raw title
+    def festival
+      @festival || (title && Festival.from_title(title, year: starting_at.year))
+    end
+
+    # The show's own name when it is an Event, e.g. "Tosca"
+    def film_name
+      Event.strip(@film_name)
+    end
+
+    # A stage show or exhibition, which title sanitizers name as a prefix
+    def event
+      Event.from_name(@film_name)
+    end
+
     def variant
       @variant = @variant.split(' ') if @variant.is_a?(String)
-      @variant.map(&:downcase).sort.uniq
+      (@variant + title_variants).map(&:downcase).sort.uniq
     end
 
     # English subtitles or open captions
     def subtitled?
       variant.include?('subtitled')
+    end
+
+    private
+
+    def title_variants
+      audiences = title ? Audience.variants(title) : []
+      event ? audiences + %w(arts) : audiences
     end
   end
 end

@@ -57,7 +57,11 @@ class FestivalPrefixesTest < Minitest::Test
       'Into Film Festival: Flow' => ['Into Film Festival', 2025],
       'French Film Fest UK: Hamnet' => ['French Film Festival', 2025],
       'Women and the World Festival: Hamnet' => ['Women and the World Festival', 2025],
-      'FFF: A Man of His Time' => ['French Film Festival', 2025]
+      'FFF: A Man of His Time' => ['French Film Festival', 2025],
+      'FFF26: Coward' => ['French Film Festival', 2026],
+      'UK Jewish Film Festival: Hamnet' => ['UK Jewish Film Festival', 2025],
+      'Women and the World International Film Festival: Hamnet' => ['Women and the World Festival', 2025],
+      'Women and the World: Hamnet' => ['Women and the World Festival', 2025]
     }.each do |title, (name, year)|
       assert_equal(Cinebase::Festival.new(name: name, year: year), Cinebase::Festival.from_title(title, year: 2025), title)
     end
@@ -65,6 +69,10 @@ class FestivalPrefixesTest < Minitest::Test
 
   def test_from_title_with_a_festival_after_the_film
     assert_equal(Cinebase::Festival.new(name: 'NFF', year: 2026), Cinebase::Festival.from_title('Party USA - NFF UK Premier', year: 2026))
+  end
+
+  def test_from_title_with_a_festival_in_brackets_after_the_film
+    assert_equal(Cinebase::Festival.new(name: 'French Film Festival', year: 2026), Cinebase::Festival.from_title('Coward (French Film Festival)', year: 2026))
   end
 
   def test_from_title_needs_the_festival_name_before_a_separator

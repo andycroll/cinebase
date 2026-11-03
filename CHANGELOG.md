@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.9.3] - 2026-11-03
+### Added
+- Festivals named in full, such as `UK Jewish Film Festival:` and `Women and the World International Film Festival:`, in brackets after the film, such as `Coward (French Film Festival)`, or with the year next to the name, such as `FFF26:`.
+- `Dog Friendly:` without a hyphen marks a dog-friendly screening, and `(Preview)` or `[Preview]` a preview.
+
 ## [5.9.2] - 2026-11-03
 ### Changed
 - Festivals take their full name, so chains agree: `CFF` is Cambridge Film Festival, `FFF` and `French Film Fest UK` are French Film Festival, `IFF` is Into Film Festival, `JFF` and `UKJFF` are UK Jewish Film Festival, `LPFF` is London Palestine Film Festival, `RFF` is Romanian Film Festival and `SLA` is Scotland Loves Anime.

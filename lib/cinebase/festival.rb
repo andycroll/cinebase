@@ -6,9 +6,10 @@ module Cinebase
   # An annual festival edition a film is screened in
   class Festival
     NAMES = [
-      'CFF', 'Cinecity', 'FFF', 'French Film Fest UK', 'IFF', 'Into Film Festival', 'JFF', 'LDNDOCS',
-      'London Palestine Film Festival', 'LPFF', 'NFF', 'Queer East', 'RFF', 'SLA', 'UKJFF',
-      'Women and the World Festival'
+      'CFF', 'Cinecity', 'FFF', 'French Film Fest UK', 'French Film Festival', 'IFF', 'Into Film Festival',
+      'JFF', 'LDNDOCS', 'London Palestine Film Festival', 'LPFF', 'NFF', 'Queer East', 'RFF', 'SLA',
+      'UK Jewish Film Festival', 'UKJFF', 'Women and the World', 'Women and the World Festival',
+      'Women and the World International Film Festival'
     ].freeze
 
     # Full names for short forms, so every chain names a festival alike
@@ -21,23 +22,28 @@ module Cinebase
       'LPFF' => 'London Palestine Film Festival',
       'RFF' => 'Romanian Film Festival',
       'SLA' => 'Scotland Loves Anime',
-      'UKJFF' => 'UK Jewish Film Festival'
+      'UKJFF' => 'UK Jewish Film Festival',
+      'Women and the World' => 'Women and the World Festival',
+      'Women and the World International Film Festival' => 'Women and the World Festival'
     }.freeze
 
-    NAME_PATTERN = NAMES.map { |name| Regexp.escape(name) }.join('|')
+    NAME_PATTERN = NAMES.sort_by { |name| -name.length }.map { |name| Regexp.escape(name) }.join('|')
 
     # Title prefixes naming a festival: the name, then the year when given
     PREFIXES = [
       /\A(Cine-Excess) (20\d{2}): /,
       /\A(Cinemagic) (\d{4}) -/,
       /\A(Horror Season) (20\d{2}) /,
-      /\A(#{NAME_PATTERN})(?: ((?:20)?\d{2}))?(?:\s*[:–-]\s*|\s+(?=Shorts:))/
+      /\A(#{NAME_PATTERN})(?: ?((?:20)?\d{2}))?(?:\s*[:–-]\s*|\s+(?=Shorts:))/
     ].freeze
 
     # A festival named after the film, such as "Party USA - NFF UK Premier"
     SUFFIX = /\s+[-–]\s+(#{NAME_PATTERN})\b(?: ((?:20)?\d{2})\b)?.*\z/
 
-    PATTERNS = [*PREFIXES, SUFFIX].freeze
+    # A festival in brackets after the film, such as "Coward (French Film Festival)"
+    BRACKETED = /\s*\((#{NAME_PATTERN})(?: ((?:20)?\d{2}))?\)/
+
+    PATTERNS =[*PREFIXES, SUFFIX, BRACKETED].freeze
 
     CENTURY = 2000
 

@@ -31,7 +31,7 @@ module Cinebase
       /\A(Cine-Excess) (20\d{2}): /,
       /\A(Cinemagic) (\d{4}) -/,
       /\A(Horror Season) (20\d{2}) /,
-      /\A(#{NAME_PATTERN})(?: ((?:20)?\d{2}))?\s*[:–-]\s*/
+      /\A(#{NAME_PATTERN})(?: ((?:20)?\d{2}))?(?:\s*[:–-]\s*|\s+(?=Shorts:))/
     ].freeze
 
     # A festival named after the film, such as "Party USA - NFF UK Premier"

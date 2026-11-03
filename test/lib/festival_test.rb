@@ -43,6 +43,7 @@ class FestivalPrefixesTest < Minitest::Test
       'Cinecity 2026: Hamnet' => ['Cinecity', 2026],
       'Cinecity 2027: Hamnet' => ['Cinecity', 2027],
       'NFF 2026: Hamnet' => ['NFF', 2026],
+      'NFF 2026 Shorts: British Mix' => ['NFF', 2026],
       'SLA 2026: A Silent Voice' => ['Scotland Loves Anime', 2026],
       'UKJFF 2026: Hamnet' => ['UK Jewish Film Festival', 2026],
       'UKJFF: Hamnet' => ['UK Jewish Film Festival', 2025],

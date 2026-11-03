@@ -11,6 +11,8 @@ class AudienceTest < Minitest::Test
       'Wicked - Sensory Friendly Screening' => %w(relaxed),
       'Wicked: Sensory Friendly Screening' => %w(relaxed),
       'Dog-Friendly Screening: Wicked' => %w(dog_friendly),
+      "Dog-Friendly: Pan's Labyrinth" => %w(dog_friendly),
+      'The Trip to the Northern Lights: Preview and Q&A' => %w(preview),
       'Wicked (Parent & Baby Only Show)' => %w(baby),
       'Wicked - Unlimited Screening' => %w(members),
       'Wicked Unlimited Screening' => %w(members),

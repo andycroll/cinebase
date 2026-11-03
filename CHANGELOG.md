@@ -11,6 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Paris Opera is an `Event`: `Paris Opera Ballet: Giselle` and `La Bayadère (Opéra de Paris)` give the prefix `Paris Opera: `.
 - A festival named after the film, such as `Party USA - NFF UK Premier`, is read and stripped like a prefix. `Festival::PATTERNS` holds both.
 - A1Web reads the language from `(Japanese Language with English Subtitles)`.
+- `Dog-Friendly:` marks a dog-friendly screening, `: Preview and Q&A` a preview, and `NFF 2026 Shorts:` the NFF festival.
 
 ### Fixed
 - `COMMON_REMOVE` strips a `Throwback:` prefix and a full stop left after a bracketed marker, such as `(35mm).`

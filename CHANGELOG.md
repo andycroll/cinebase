@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.10.1] - 2026-11-03
+### Fixed
+- A1Web and Boxoffice chains name festivals with `Performance.festival_names`, as they set the festival themselves.
+- A sport event drops the `arts` variant that a chain tags its events genre with.
+
 ## [5.10.0] - 2026-11-03
 ### Added
 - Live sport is an `Event`: `Six Nations 2027 - England v France` gives the event Six Nations and the variant `sport`. The fixture keeps the competition in its film name. `Event#variant` is `arts` or `sport`.

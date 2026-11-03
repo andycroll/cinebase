@@ -63,9 +63,15 @@ module Cinebase
       Event.from_name(@film_name)
     end
 
+    # Chains list sport under their events genre, which they tag as arts
     def variant
       @variant = @variant.split(' ') if @variant.is_a?(String)
-      (@variant + title_variants).map(&:downcase).sort.uniq
+      variants = (@variant + title_variants).map(&:downcase).sort.uniq
+      if event&.variant == 'sport'
+        variants - %w(arts)
+      else
+        variants
+      end
     end
 
     # English subtitles or open captions

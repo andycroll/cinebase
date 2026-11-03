@@ -82,6 +82,12 @@ class BoxofficePerformanceTest < Minitest::Test
     assert_equal %w(baby), performance.variant
   end
 
+  def test_at_names_the_festival_as_the_chain_does
+    ExampleChain::Performance.stub(:festival_names, { 'CFF' => 'Chain Film Festival' }) do
+      assert_equal 'Chain Film Festival', find('Mystery Matinee').festival.name
+    end
+  end
+
   def test_at_keeps_late_shows_on_the_next_utc_day
     performance = performances_at('X0001').find { |p| p.variant == %w(senior) }
 

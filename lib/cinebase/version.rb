@@ -2,5 +2,5 @@
 
 # Cinebase version
 module Cinebase
-  VERSION = '5.9.3'
+  VERSION = '5.10.0'
 end

@@ -140,6 +140,8 @@ class TitleSanitizerTest < Minitest::Test
     assert_common_sanitized('Wicked', 'Dog-Friendly Screening: Wicked')
     assert_common_sanitized("Pan's Labyrinth", "Dog-Friendly: Pan's Labyrinth")
     assert_common_sanitized('Wicked', 'Dog Friendly: Wicked')
+    assert_common_sanitized('Elf', 'Elf + Mulled Wine and Carols')
+    assert_common_sanitized('Time And Water', 'DocHouse: LDNDOCS 2026: Time And Water')
     assert_common_sanitized('The Trip to the Northern Lights', 'The Trip to the Northern Lights: Preview and Q&A')
     assert_common_sanitized('Shorts: British Mix', 'NFF 2026 Shorts: British Mix')
     assert_common_sanitized('Wicked', 'Wicked (Parent & Baby Only Show)')

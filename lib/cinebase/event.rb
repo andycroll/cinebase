@@ -11,7 +11,8 @@ module Cinebase
       'Royal Ballet and Opera' => /\A(?:Royal Ballet and Opera|The Royal Ballet|The Royal Opera): /,
       'National Theatre Live' => /\A(?:National Theatre Live|National Theatre|NT Live): /,
       'Exhibition on Screen' => /\AExhibition on Screen: /,
-      'Bolshoi Ballet' => /\ABolshoi(?: Ballet)?: /
+      'Bolshoi Ballet' => /\ABolshoi(?: Ballet)?: /,
+      'Paris Opera' => /\AParis Opera: /
     }.freeze
 
     PREFIX = Regexp.union(PREFIXES.values)

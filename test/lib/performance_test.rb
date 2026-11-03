@@ -307,7 +307,7 @@ class PerformanceTest < Minitest::Test
 
   def test_abstract_class_title_finds_a_festival_in_the_screening_year
     performance = Cinebase::Performance.new(titled_options('UKJFF: Hamnet'))
-    assert_equal(Cinebase::Festival.new(name: 'UKJFF', year: 2026), performance.festival)
+    assert_equal(Cinebase::Festival.new(name: 'UK Jewish Film Festival', year: 2026), performance.festival)
   end
 
   def test_abstract_class_given_festival_wins_over_title

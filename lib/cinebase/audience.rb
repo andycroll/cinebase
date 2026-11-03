@@ -9,10 +9,15 @@ module Cinebase
     LABELS = {
       'kids' => [/\A(?:Toddler (?:Club|Kino)|Kids'? Club)\s*:\s*/i],
       'relaxed' => [/\ARelaxed(?: Screening)?\s*:\s*/i, /#{SEPARATOR}(?:Sensory|Autism) Friendly Screening\z/i],
-      'dog_friendly' => [/\ADog-Friendly Screening\s*:\s*/i],
+      'dog_friendly' => [/\ADog-Friendly(?: Screening)?\s*[:\-–]\s*/i],
       'baby' => [/\s*\(Parent (?:&|and) Baby(?: Only Show)?\)/i],
       'members' => [/#{SEPARATOR}(?:Unlimited|MyOmnipass Member) Screening\z/i],
-      'preview' => [/\s*[-–]\s*(?:Special )?Preview\z/i]
+      'subtitled' => [/\([^)]*\bsubtitles\)/i],
+      'preview' => [
+        /\s*[-–]\s*(?:Special )?Preview\z/i,
+        /\s*[:\-–]\s*Preview and Q(?:&|\+)A\z/i,
+        /\ASee It First\s*[-–:]\s*/i
+      ]
     }.freeze
 
     PATTERNS = LABELS.values.flatten.freeze

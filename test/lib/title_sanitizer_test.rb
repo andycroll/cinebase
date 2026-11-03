@@ -138,9 +138,13 @@ class TitleSanitizerTest < Minitest::Test
     assert_common_sanitized('The Polar Express', 'Toddler Club: The Polar Express')
     assert_common_sanitized('Wicked', 'Wicked - Sensory Friendly Screening')
     assert_common_sanitized('Wicked', 'Dog-Friendly Screening: Wicked')
+    assert_common_sanitized("Pan's Labyrinth", "Dog-Friendly: Pan's Labyrinth")
+    assert_common_sanitized('The Trip to the Northern Lights', 'The Trip to the Northern Lights: Preview and Q&A')
+    assert_common_sanitized('Shorts: British Mix', 'NFF 2026 Shorts: British Mix')
     assert_common_sanitized('Wicked', 'Wicked (Parent & Baby Only Show)')
     assert_common_sanitized('Wicked', 'Wicked - MyOmnipass Member Screening')
     assert_common_sanitized('Wicked', 'Wicked - SPECIAL PREVIEW')
+    assert_common_sanitized('Dune: Part Three', 'See It First – Dune: Part Three')
     assert_common_sanitized('The Wedding Entertainer', 'Centrepiece Gala: The Wedding Entertainer')
     assert_common_sanitized('Mediterranean Fever', 'Mediterranean Fever + ScreenTalk')
     assert_common_sanitized('Hamnet', 'Hamnet + Intro')
@@ -183,6 +187,25 @@ class TitleSanitizerTest < Minitest::Test
     assert_common_sanitized('Gentle Monster', "Gentle Monster ")
   end
 
+  def test_common_rules_remove_throwback_series
+    assert_common_sanitized('Rocky', 'Throwback: Rocky (50th Anniversary)')
+  end
+
+  def test_common_rules_remove_full_stop_after_a_marker
+    assert_common_sanitized('The Muppet Christmas Carol', 'The Muppet Christmas Carol (35mm).')
+    assert_common_sanitized('Arthur Christmas', 'Arthur Christmas (15th Anniversary).')
+    assert_common_sanitized('Thunderbirds Are Go...', 'Thunderbirds Are Go...')
+  end
+
+  def test_common_rules_name_paris_opera_as_an_event
+    assert_common_sanitized('Paris Opera: La Bayadère', 'La Bayadère (Opéra de Paris)')
+    assert_common_sanitized('Paris Opera: Giselle', 'Paris Opera Ballet: Giselle')
+  end
+
+  def test_common_rules_remove_festival_suffix
+    assert_common_sanitized('Party USA', 'Party USA - NFF UK Premier')
+  end
+
   def test_common_rules_remove_presenter_credit
     assert_common_sanitized('Zardoz', 'Bar Trash Presents: Zardoz')
     assert_common_sanitized('Terminator 2: Judgment Day', 'Cellar Door x ThoughtBubble presents: Terminator 2: Judgment Day')
@@ -218,7 +241,8 @@ class TitleSanitizerTest < Minitest::Test
   end
 
   def test_common_rules_decapitalise_world_tour
-    assert_common_sanitized("ENHYPEN World Tour 'BLOOD SAGA'", "ENHYPEN WORLD TOUR 'BLOOD SAGA'")
+    assert_common_sanitized("Enhypen World Tour 'Blood Saga'", "ENHYPEN WORLD TOUR 'BLOOD SAGA'")
+    assert_common_sanitized("BTS World Tour 'Arirang' in Jakarta: Live Viewing", "BTS WORLD TOUR 'ARIRANG' IN JAKARTA: LIVE VIEWING")
   end
 
   def test_common_rules_remove_film_year

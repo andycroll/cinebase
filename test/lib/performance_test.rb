@@ -7,6 +7,12 @@ class TestPerformance < Cinebase::Performance
   end
 end
 
+class LocalFestivalPerformance < Cinebase::Performance
+  def self.festival_names
+    { 'NFF' => 'Norwich Film Festival' }
+  end
+end
+
 class PerformanceTest < Minitest::Test
   # Tests for abstract template class
 
@@ -295,6 +301,14 @@ class PerformanceTest < Minitest::Test
     assert_equal(%w(arts), performance.variant)
   end
 
+  def test_abstract_class_sport_fixture_is_a_sport_event
+    options = { cinema_id: 123, cinema_name: 'Cinema', film_name: 'Six Nations 2027 - England v France', starting_at: Time.now }
+    performance = Cinebase::Performance.new(options)
+    assert_equal('Six Nations 2027 - England v France', performance.film_name)
+    assert_equal(Cinebase::Event.new(name: 'Six Nations'), performance.event)
+    assert_equal(%w(sport), performance.variant)
+  end
+
   def test_abstract_class_event_for_a_film_is_nil
     options = { cinema_id: 123, cinema_name: 'Cinema', film_name: 'Film Name', starting_at: Time.now }
     assert_nil(Cinebase::Performance.new(options).event)
@@ -317,6 +331,11 @@ class PerformanceTest < Minitest::Test
   end
 
   # Tests for implemented subclass
+
+  def test_subclass_festival_names_name_a_local_festival
+    performance = LocalFestivalPerformance.new(titled_options('NFF 2026: Comedy Shorts'))
+    assert_equal(Cinebase::Festival.new(name: 'Norwich Film Festival', year: 2026), performance.festival)
+  end
 
   def test_subclass_at_returns_cinema_id
     assert_equal(123, TestPerformance.at(123))

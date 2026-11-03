@@ -34,7 +34,7 @@ module Cinebase
       /\A(Cine-Excess) (20\d{2}): /,
       /\A(Cinemagic) (\d{4}) -/,
       /\A(Horror Season) (20\d{2}) /,
-      /\A(#{NAME_PATTERN})(?: ?((?:20)?\d{2}))?(?:\s*[:–-]\s*|\s+(?=Shorts:))/
+      /\A(?:DocHouse:\s*)?(#{NAME_PATTERN})(?: ?((?:20)?\d{2}))?(?:\s*[:–-]\s*|\s+(?=Shorts:))/
     ].freeze
 
     # A festival named after the film, such as "Party USA - NFF UK Premier"
@@ -43,18 +43,20 @@ module Cinebase
     # A festival in brackets after the film, such as "Coward (French Film Festival)"
     BRACKETED = /\s*\((#{NAME_PATTERN})(?: ((?:20)?\d{2}))?\)/
 
-    PATTERNS =[*PREFIXES, SUFFIX, BRACKETED].freeze
+    PATTERNS = [*PREFIXES, SUFFIX, BRACKETED].freeze
 
     CENTURY = 2000
 
     # @param [String] title raw film title
     # @param [Integer] year the edition when the title gives none, usually the
     #   screening's year
+    # @param [Hash{String => String}] names full names for short forms that
+    #   differ by chain, such as NFF
     # @return [Cinebase::Festival, nil]
-    def self.from_title(title, year:)
+    def self.from_title(title, year:, names: {})
       PATTERNS.each do |pattern|
         match = title.match(pattern)
-        return new(name: FULL_NAMES.fetch(match[1], match[1]), year: edition(match[2]) || year) if match
+        return new(name: FULL_NAMES.merge(names).fetch(match[1], match[1]), year: edition(match[2]) || year) if match
       end
       nil
     end

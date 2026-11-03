@@ -15,6 +15,8 @@ class AudienceTest < Minitest::Test
       "Dog-Friendly: Pan's Labyrinth" => %w(dog_friendly),
       'The Trip to the Northern Lights: Preview and Q&A' => %w(preview),
       'Wicked (Parent & Baby Only Show)' => %w(baby),
+      "It's A Wonderful Life + Mulled Wine & Mince Pies" => %w(mulled_wine),
+      'Elf + Mulled Wine and Carols' => %w(mulled_wine),
       'Wicked - Unlimited Screening' => %w(members),
       'Wicked Unlimited Screening' => %w(members),
       'Wicked - MyOmnipass Member Screening' => %w(members),

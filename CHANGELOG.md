@@ -2,6 +2,12 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.10.0] - 2026-11-03
+### Added
+- Live sport is an `Event`: `Six Nations 2027 - England v France` gives the event Six Nations and the variant `sport`. The fixture keeps the competition in its film name. `Event#variant` is `arts` or `sport`.
+- `Festival.from_title` takes `names:`, and `Performance.festival_names` lets a chain name a short form that differs by place, such as NFF.
+- `+ Mulled Wine` marks the `mulled_wine` variant, and festival prefixes after `DocHouse:` are read.
+
 ## [5.9.3] - 2026-11-03
 ### Added
 - Festivals named in full, such as `UK Jewish Film Festival:` and `Women and the World International Film Festival:`, in brackets after the film, such as `Coward (French Film Festival)`, or with the year next to the name, such as `FFF26:`.

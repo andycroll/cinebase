@@ -43,9 +43,14 @@ module Cinebase
       starting_at.to_date
     end
 
+    # Full names for festival short forms that differ by chain, such as NFF
+    def self.festival_names
+      {}
+    end
+
     # Given, or named by the raw title
     def festival
-      @festival || (title && Festival.from_title(title, year: starting_at.year))
+      @festival || (title && Festival.from_title(title, year: starting_at.year, names: self.class.festival_names))
     end
 
     # The show's own name when it is an Event, e.g. "Tosca"
@@ -72,7 +77,7 @@ module Cinebase
 
     def title_variants
       audiences = title ? Audience.variants(title) : []
-      event ? audiences + %w(arts) : audiences
+      event ? audiences + [event.variant] : audiences
     end
   end
 end

@@ -18,6 +18,20 @@ class EventTest < Minitest::Test
     end
   end
 
+  def test_from_name_reads_a_sport_competition
+    {
+      'Six Nations 2027 - England v France' => 'Six Nations',
+      'World Rugby Nations Championship: England V Japan' => 'World Rugby Nations Championship'
+    }.each do |film_name, competition|
+      assert_equal(Cinebase::Event.new(name: competition), Cinebase::Event.from_name(film_name), film_name)
+    end
+  end
+
+  def test_variant_is_sport_for_a_competition_and_arts_otherwise
+    assert_equal('sport', Cinebase::Event.new(name: 'Six Nations').variant)
+    assert_equal('arts', Cinebase::Event.new(name: 'Met Opera').variant)
+  end
+
   def test_from_name_without_event_returns_nil
     assert_nil(Cinebase::Event.from_name('Metropolis'))
     assert_nil(Cinebase::Event.from_name('The Royal Tenenbaums'))
@@ -26,5 +40,6 @@ class EventTest < Minitest::Test
   def test_strip_leaves_the_show
     assert_equal('Tosca', Cinebase::Event.strip('Met Opera: Tosca'))
     assert_equal('The Royal Tenenbaums', Cinebase::Event.strip('The Royal Tenenbaums'))
+    assert_equal('Six Nations 2027 - England v France', Cinebase::Event.strip('Six Nations 2027 - England v France'))
   end
 end

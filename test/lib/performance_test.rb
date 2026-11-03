@@ -301,7 +301,7 @@ class PerformanceTest < Minitest::Test
   end
 
   def test_abstract_class_title_adds_audience_variants
-    performance = Cinebase::Performance.new(titled_options('Relaxed Screening: Wicked').merge(variant: %w(subtitled)))
+    performance = Cinebase::Performance.new(titled_options("Relaxed\u00A0Screening: Wicked").merge(variant: %w(subtitled)))
     assert_equal(%w(relaxed subtitled), performance.variant)
   end
 

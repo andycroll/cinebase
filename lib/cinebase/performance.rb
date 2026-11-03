@@ -21,7 +21,7 @@ module Cinebase
       @film_year   = options.fetch(:film_year, nil)
       @language    = options.fetch(:language, nil)
       @time        = options.fetch(:starting_at)
-      @title       = options.fetch(:title, nil)
+      @title       = options.fetch(:title, nil)&.gsub(/[[:space:]]/, ' ')
       @variant     = options.fetch(:variant, [])
     end
 

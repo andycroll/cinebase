@@ -167,7 +167,30 @@ class TitleSanitizerTest < Minitest::Test
     end
   end
 
+  def test_common_rules_remove_trailing_anniversary
+    assert_common_sanitized("Pan's Labyrinth", "Pan's Labyrinth 20th Anniversary 4K Restoration")
+    assert_common_sanitized('Star Trek: First Contact', 'Star Trek: First Contact - 30th Anniversary')
+    assert_common_sanitized("Little Theatre's 90th Anniversary: The Third Man", "Little Theatre's 90th Anniversary: The Third Man")
+  end
+
+  def test_common_rules_remove_more_q_and_a_spellings
+    assert_common_sanitized('How Deep Is Your Love', 'How Deep Is Your Love + Eleanor Mortimer Dir. Q&A')
+    assert_common_sanitized('I Swear', 'I Swear (with cast & crew Q&A)')
+  end
+
+  def test_common_rules_read_non_breaking_spaces_as_spaces
+    assert_common_sanitized('Ghost Stories', "Norfolk Folklore Society presents: Ghost Stories")
+    assert_common_sanitized('Gentle Monster', "Gentle Monster ")
+  end
+
+  def test_common_rules_remove_presenter_credit
+    assert_common_sanitized('Zardoz', 'Bar Trash Presents: Zardoz')
+    assert_common_sanitized('Terminator 2: Judgment Day', 'Cellar Door x ThoughtBubble presents: Terminator 2: Judgment Day')
+    assert_common_sanitized('Mississippi Records presents A History', 'Mississippi Records presents A History')
+  end
+
   def test_common_rules_remove_live_on_stage
+    assert_common_sanitized('Starlight Express', 'Starlight Express – Live On Stage')
     assert_common_sanitized("Andrew Lloyd Webber's Starlight Express", "Andrew Lloyd Webber's Starlight Express - Live On Stage")
   end
 

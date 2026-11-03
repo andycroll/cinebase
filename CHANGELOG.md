@@ -2,6 +2,11 @@
 All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.9.1] - 2026-11-03
+### Fixed
+- Titles with non-breaking spaces now match the common rules and audience labels.
+- `COMMON_REMOVE` also strips presenter credits such as `Bar Trash Presents:`, an anniversary at the end of a title without brackets, `– Live On Stage` with an en dash, Q&A add-ons naming a `Dir.`, and bracketed Q&As.
+
 ## [5.9.0] - 2026-11-03
 ### Added
 - `Cinebase::Event` for opera, ballet, theatre and exhibition screenings. `Performance#event` names the series from the `film_name` prefix the title sanitizer gives, such as `Met Opera: `, and `Performance#film_name` leaves it out.

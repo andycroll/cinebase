@@ -5,7 +5,7 @@ module Cinebase
   TitleSanitizer = Struct.new(:title) do
     def sanitized
       @sanitized ||= begin
-        sanitized = title.dup
+        sanitized = title.gsub(/[[:space:]]/, ' ')
         remove.each do |pattern|
           sanitized.gsub! pattern, ''
         end
@@ -45,6 +45,7 @@ module Cinebase
       *Festival::PREFIXES,                              # festival prefix
       *Audience::PATTERNS,                              # audience label
       /\A(?:Opening|Closing|Centrepiece|Documentary)(?: Night)? Gala:\s*/i, # festival gala
+      /\A[^:]+?\s+presents:\s*/i,                       # presenter credit
       /\s+[23]d\b/i,                                    # dimension
       /\s*\([23]D\)/i,                                  # bracketed dimension
       /\((#{LANGUAGES.join('|')})\)/i,                  # language version
@@ -53,14 +54,16 @@ module Cinebase
       /\s*\(4K(?: Restoration)?\)/i,                    # bracketed 4K restoration
       /\s*\((?:20\d{2} )?Encore\)/i,                    # bracketed encore
       /\s*\(Recorded\)/i,                               # recorded, not live
-      /\s+-\s+Live On Stage\z/i,                        # filmed stage show
+      /\s+[-–]\s+Live On Stage\z/i,                     # filmed stage show
       /\(Re-release\)/i,                                # re-release
       FILM_YEAR,                                        # film year, see .film_year
-      /\s*\+\s*(?:[\w-]+\s+)*Q(?:&|\+)A\z/i,            # Q&A add-on
+      /\s*\+\s*(?:[\w.-]+\s+)*Q(?:&|\+)A\z/i,           # Q&A add-on
+      /\s*\((?:with )?[^)]*Q(?:&|\+)A\)/i,              # bracketed Q&A
       /\s*\+\s*Discussion\z/i,                          # discussion add-on
       /\s*\+\s*(?:ScreenTalk|Intro(?:duction)?|Short Film)\z/i, # talk or short add-on
       /\s*\((35|70)mm\)/i,                              # film gauge
-      /\s+4K(?: Restoration)?\b/i,                     # 4K restoration
+      /\s+4K(?: Restoration)?\b/i,                      # 4K restoration
+      /\s*[-–]?\s*\d+(?:st|nd|rd|th) Anniversary\z/i,   # trailing anniversary
       /:\s*Encore\z/i,                                  # encore
       /\bsing-?a-?long\z/i,                             # singalong
       'amp;'                                            # html ampersands

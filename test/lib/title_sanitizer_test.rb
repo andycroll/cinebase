@@ -139,6 +139,7 @@ class TitleSanitizerTest < Minitest::Test
     assert_common_sanitized('Wicked', 'Wicked - Sensory Friendly Screening')
     assert_common_sanitized('Wicked', 'Dog-Friendly Screening: Wicked')
     assert_common_sanitized("Pan's Labyrinth", "Dog-Friendly: Pan's Labyrinth")
+    assert_common_sanitized('Wicked', 'Dog Friendly: Wicked')
     assert_common_sanitized('The Trip to the Northern Lights', 'The Trip to the Northern Lights: Preview and Q&A')
     assert_common_sanitized('Shorts: British Mix', 'NFF 2026 Shorts: British Mix')
     assert_common_sanitized('Wicked', 'Wicked (Parent & Baby Only Show)')
@@ -204,6 +205,10 @@ class TitleSanitizerTest < Minitest::Test
 
   def test_common_rules_remove_festival_suffix
     assert_common_sanitized('Party USA', 'Party USA - NFF UK Premier')
+    assert_common_sanitized('Coward', 'Coward (French Film Festival)')
+    assert_common_sanitized('Coward', 'FFF26: Coward')
+    assert_common_sanitized('Hamnet', 'UK Jewish Film Festival: Hamnet')
+    assert_common_sanitized('Hamnet', 'Women and the World International Film Festival: Hamnet')
   end
 
   def test_common_rules_remove_presenter_credit

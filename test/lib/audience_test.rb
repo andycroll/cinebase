@@ -11,6 +11,7 @@ class AudienceTest < Minitest::Test
       'Wicked - Sensory Friendly Screening' => %w(relaxed),
       'Wicked: Sensory Friendly Screening' => %w(relaxed),
       'Dog-Friendly Screening: Wicked' => %w(dog_friendly),
+      'Dog Friendly: Wicked' => %w(dog_friendly),
       "Dog-Friendly: Pan's Labyrinth" => %w(dog_friendly),
       'The Trip to the Northern Lights: Preview and Q&A' => %w(preview),
       'Wicked (Parent & Baby Only Show)' => %w(baby),
@@ -19,6 +20,8 @@ class AudienceTest < Minitest::Test
       'Wicked - MyOmnipass Member Screening' => %w(members),
       'Wicked - Preview' => %w(preview),
       'Wicked - SPECIAL PREVIEW' => %w(preview),
+      'Whispers in the Woods (Preview)' => %w(preview),
+      'All of a Sudden [Preview]' => %w(preview),
       'See It First – Dune: Part Three' => %w(preview),
       'Irregular at Magic High School (Japanese Language with English Subtitles)' => %w(subtitled)
     }.each do |title, variants|

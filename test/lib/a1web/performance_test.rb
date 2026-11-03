@@ -106,6 +106,19 @@ class A1webPerformanceTest < Minitest::Test
     assert_equal 'Japanese', ExampleA1webChain::Performance.send(:attributes, showing)[:language]
   end
 
+  def test_festival_from_the_title_with_the_chain_name
+    showing = Cinebase::A1web::Showing.new(
+      film_id: '1', title: 'NFF 2026: Comedy Shorts', date: DATE, starting_at: Time.utc(2026, 11, 1, 12),
+      booking_url: 'https://example.co.uk/booking/1', tags: []
+    )
+
+    ExampleA1webChain::Performance.stub(:festival_names, { 'NFF' => 'Nottingham Film Festival' }) do
+      festival = ExampleA1webChain::Performance.send(:attributes, showing)[:festival]
+
+      assert_equal Cinebase::Festival.new(name: 'Nottingham Film Festival', year: 2026), festival
+    end
+  end
+
   def test_language_from_a_language_suffix
     performance = performances_at('EX_NEWT').last
 

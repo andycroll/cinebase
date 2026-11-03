@@ -57,7 +57,7 @@ module Cinebase
         {
           booking_url: showtime.booking_url,
           dimension: showtime.dimension,
-          festival: Festival.from_title(title, year: starting_at.year),
+          festival: Festival.from_title(title, year: starting_at.year, names: festival_names),
           film_name: title_sanitizer.new(title).sanitized,
           film_year: TitleSanitizer.film_year(title),
           language: showtime.language || title[/\((#{TitleSanitizer::LANGUAGES.join('|')})\)/i, 1],

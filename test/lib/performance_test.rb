@@ -309,6 +309,11 @@ class PerformanceTest < Minitest::Test
     assert_equal(%w(sport), performance.variant)
   end
 
+  def test_abstract_class_sport_event_is_not_arts
+    options = { cinema_id: 123, cinema_name: 'Cinema', film_name: 'Six Nations 2027 - England v France', starting_at: Time.now, variant: %w(arts imax) }
+    assert_equal(%w(imax sport), Cinebase::Performance.new(options).variant)
+  end
+
   def test_abstract_class_event_for_a_film_is_nil
     options = { cinema_id: 123, cinema_name: 'Cinema', film_name: 'Film Name', starting_at: Time.now }
     assert_nil(Cinebase::Performance.new(options).event)

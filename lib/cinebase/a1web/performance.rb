@@ -71,7 +71,7 @@ module Cinebase
         {
           booking_url: showing.booking_url,
           dimension: [title, *showing.tags].any? { |text| text.match?(THREE_D) } ? '3d' : '2d',
-          festival: Festival.from_title(title, year: showing.date.year),
+          festival: Festival.from_title(title, year: showing.date.year, names: festival_names),
           film_name: title_sanitizer.new(title).sanitized,
           film_year: TitleSanitizer.film_year(title),
           language: title[LANGUAGE, 1],

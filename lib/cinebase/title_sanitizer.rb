@@ -42,10 +42,12 @@ module Cinebase
     FILM_YEAR = /\s*\((1[89]\d{2}|20\d{2})\)(?=(?:\s*\([^)]*\))*\s*\z)/
 
     COMMON_REMOVE = [
-      *Festival::PREFIXES,                              # festival prefix
+      /(?<=\))\.\z/,                                     # full stop after a marker
+      *Festival::PATTERNS,                              # festival prefix or suffix
       *Audience::PATTERNS,                              # audience label
       /\A(?:Opening|Closing|Centrepiece|Documentary)(?: Night)? Gala:\s*/i, # festival gala
       /\A[^:]+?\s+presents:\s*/i,                       # presenter credit
+      /\AThrowback:\s*/i,                               # series prefix
       /\s+[23]d\b/i,                                    # dimension
       /\s*\([23]D\)/i,                                  # bracketed dimension
       /\((#{LANGUAGES.join('|')})\)/i,                  # language version
@@ -87,7 +89,9 @@ module Cinebase
         'Royal Ballet and Opera: ',
       /\A(?:NT (?:Live|Encore)(?: Encore)?|NTL|National Theatre(?: Live)?)#{ARTS_SEPARATOR}(.*)/i => 'National Theatre Live: ',
       /\AExhibition on Screen#{ARTS_SEPARATOR}(.*)/i => 'Exhibition on Screen: ',
-      /\ABolshoi(?: Ballet)?#{ARTS_SEPARATOR}(.*)/i => 'Bolshoi Ballet: '
+      /\ABolshoi(?: Ballet)?#{ARTS_SEPARATOR}(.*)/i => 'Bolshoi Ballet: ',
+      /\A(?:Paris Opera(?: Ballet)?|Op[ée]ra de Paris)#{ARTS_SEPARATOR}(.*)/i => 'Paris Opera: ',
+      /\A(.*?)\s*\(Op[ée]ra (?:national )?de Paris\)\z/i => 'Paris Opera: '
     }.freeze
 
     SMALL_WORDS = %w(a an and as at but by for from in into nor of on or the to v vs with).freeze

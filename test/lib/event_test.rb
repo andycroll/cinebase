@@ -11,7 +11,8 @@ class EventTest < Minitest::Test
       'NT Live: Hay Fever' => 'National Theatre Live',
       'Exhibition on Screen: Monet' => 'Exhibition on Screen',
       'Bolshoi: Giselle' => 'Bolshoi Ballet',
-      'Bolshoi Ballet: Giselle' => 'Bolshoi Ballet'
+      'Bolshoi Ballet: Giselle' => 'Bolshoi Ballet',
+      'Paris Opera: Giselle' => 'Paris Opera'
     }.each do |film_name, series|
       assert_equal(Cinebase::Event.new(name: series), Cinebase::Event.from_name(film_name), film_name)
     end

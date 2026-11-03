@@ -21,7 +21,7 @@ module Cinebase
       # A tag, or the title, as some chains list 3D and IMAX copies as films
       THREE_D = /\b3D\b/i
       IMAX = /\bIMAX\b/i
-      LANGUAGE = /\((#{TitleSanitizer::LANGUAGES.join('|')})(?: language)?\)/i
+      LANGUAGE = /\((#{TitleSanitizer::LANGUAGES.join('|')})(?: language)?(?: with [^)]*)?\)/i
       TIME_ZONE = 'Europe/London'
 
       # @return [Class] the chain's Cinebase::A1web::Cinema subclass

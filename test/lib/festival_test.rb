@@ -62,6 +62,10 @@ class FestivalPrefixesTest < Minitest::Test
     end
   end
 
+  def test_from_title_with_a_festival_after_the_film
+    assert_equal(Cinebase::Festival.new(name: 'NFF', year: 2026), Cinebase::Festival.from_title('Party USA - NFF UK Premier', year: 2026))
+  end
+
   def test_from_title_needs_the_festival_name_before_a_separator
     assert_nil(Cinebase::Festival.from_title('Cinecityscapes', year: 2026))
     assert_nil(Cinebase::Festival.from_title('IFFY: The Movie', year: 2026))

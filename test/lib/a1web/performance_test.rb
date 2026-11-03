@@ -97,6 +97,15 @@ class A1webPerformanceTest < Minitest::Test
     assert_equal 'Hindi', attributes[:language]
   end
 
+  def test_language_from_a_language_with_subtitles_suffix
+    showing = Cinebase::A1web::Showing.new(
+      film_id: '1', title: 'An Example (Japanese Language with English Subtitles)', date: DATE,
+      starting_at: Time.utc(2026, 11, 1, 12), booking_url: 'https://example.co.uk/booking/1', tags: []
+    )
+
+    assert_equal 'Japanese', ExampleA1webChain::Performance.send(:attributes, showing)[:language]
+  end
+
   def test_language_from_a_language_suffix
     performance = performances_at('EX_NEWT').last
 

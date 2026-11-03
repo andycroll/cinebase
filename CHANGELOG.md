@@ -7,9 +7,13 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 - Festivals take their full name, so chains agree: `CFF` is Cambridge Film Festival, `FFF` and `French Film Fest UK` are French Film Festival, `IFF` is Into Film Festival, `JFF` and `UKJFF` are UK Jewish Film Festival, `LPFF` is London Palestine Film Festival, `RFF` is Romanian Film Festival and `SLA` is Scotland Loves Anime.
 
 ### Added
-- A `See It First –` prefix marks a preview.
+- A `See It First –` prefix marks a preview, and bracketed subtitles, such as `(with subtitles)`, mark a subtitled screening.
+- Paris Opera is an `Event`: `Paris Opera Ballet: Giselle` and `La Bayadère (Opéra de Paris)` give the prefix `Paris Opera: `.
+- A festival named after the film, such as `Party USA - NFF UK Premier`, is read and stripped like a prefix. `Festival::PATTERNS` holds both.
+- A1Web reads the language from `(Japanese Language with English Subtitles)`.
 
 ### Fixed
+- `COMMON_REMOVE` strips a `Throwback:` prefix and a full stop left after a bracketed marker, such as `(35mm).`
 - Titles in capitals with `WORLD TOUR` are title cased throughout, not just the words `World Tour`.
 
 ## [5.9.1] - 2026-11-03

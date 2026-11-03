@@ -24,13 +24,20 @@ module Cinebase
       'UKJFF' => 'UK Jewish Film Festival'
     }.freeze
 
+    NAME_PATTERN = NAMES.map { |name| Regexp.escape(name) }.join('|')
+
     # Title prefixes naming a festival: the name, then the year when given
     PREFIXES = [
       /\A(Cine-Excess) (20\d{2}): /,
       /\A(Cinemagic) (\d{4}) -/,
       /\A(Horror Season) (20\d{2}) /,
-      /\A(#{NAMES.map { |name| Regexp.escape(name) }.join('|')})(?: ((?:20)?\d{2}))?\s*[:–-]\s*/
+      /\A(#{NAME_PATTERN})(?: ((?:20)?\d{2}))?\s*[:–-]\s*/
     ].freeze
+
+    # A festival named after the film, such as "Party USA - NFF UK Premier"
+    SUFFIX = /\s+[-–]\s+(#{NAME_PATTERN})\b(?: ((?:20)?\d{2})\b)?.*\z/
+
+    PATTERNS = [*PREFIXES, SUFFIX].freeze
 
     CENTURY = 2000
 
@@ -39,8 +46,8 @@ module Cinebase
     #   screening's year
     # @return [Cinebase::Festival, nil]
     def self.from_title(title, year:)
-      PREFIXES.each do |prefix|
-        match = title.match(prefix)
+      PATTERNS.each do |pattern|
+        match = title.match(pattern)
         return new(name: FULL_NAMES.fetch(match[1], match[1]), year: edition(match[2]) || year) if match
       end
       nil

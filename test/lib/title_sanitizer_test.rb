@@ -184,6 +184,25 @@ class TitleSanitizerTest < Minitest::Test
     assert_common_sanitized('Gentle Monster', "Gentle Monster ")
   end
 
+  def test_common_rules_remove_throwback_series
+    assert_common_sanitized('Rocky', 'Throwback: Rocky (50th Anniversary)')
+  end
+
+  def test_common_rules_remove_full_stop_after_a_marker
+    assert_common_sanitized('The Muppet Christmas Carol', 'The Muppet Christmas Carol (35mm).')
+    assert_common_sanitized('Arthur Christmas', 'Arthur Christmas (15th Anniversary).')
+    assert_common_sanitized('Thunderbirds Are Go...', 'Thunderbirds Are Go...')
+  end
+
+  def test_common_rules_name_paris_opera_as_an_event
+    assert_common_sanitized('Paris Opera: La Bayadère', 'La Bayadère (Opéra de Paris)')
+    assert_common_sanitized('Paris Opera: Giselle', 'Paris Opera Ballet: Giselle')
+  end
+
+  def test_common_rules_remove_festival_suffix
+    assert_common_sanitized('Party USA', 'Party USA - NFF UK Premier')
+  end
+
   def test_common_rules_remove_presenter_credit
     assert_common_sanitized('Zardoz', 'Bar Trash Presents: Zardoz')
     assert_common_sanitized('Terminator 2: Judgment Day', 'Cellar Door x ThoughtBubble presents: Terminator 2: Judgment Day')
